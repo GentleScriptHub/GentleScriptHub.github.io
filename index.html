@@ -284,8 +284,7 @@
           <div class="script-item">
             <div class="script-title">Arise Crossover</div>
             <button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button>
-          </div> onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/FlyingWings.lua'))()`)">📋 Copy Loadstring</button>
-
+          </div>
           <div class="script-item">
             <div class="script-title">PETS GO</div>
             <button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button>
@@ -316,12 +315,12 @@
           </div>
           <div class="script-item">
             <div class="script-title">Flying Wings Race Sim</div>
-            <button class="copy-btn" onclick="copyScript('Flying Wings Race')">Copy Script</button>
+            <button class="copy-btn" onclick="copyScript('Flying')">Copy Script</button>
         </div>
       </div>
     </div>
 
-    <!-- Premium Section -->
+      <!-- Premium Section -->
 <div class="premium-section" id="premium">
   <h2>Become Premium</h2>
   <p>Get access to exclusive scripts and features by becoming a premium member. Buy today!</p>
@@ -331,7 +330,7 @@
   </div>
 
   <script>
-    // Function to update the active members count
+     // Function to update the active members count
     function updateActiveMembers() {
       const activeMembersCount = Math.floor(Math.random() * 500) + 100;
       document.getElementById("activeMembers").innerText = activeMembersCount;
@@ -340,15 +339,7 @@
     setInterval(updateActiveMembers, 5000);  // Update every 5 seconds
     updateActiveMembers();  // Initial update
 
-    // Toggle sidebar visibility and slide content
-    function toggleSidebar() {
-      const sidebar = document.getElementById("discordSidebar");
-      const mainContent = document.getElementById("mainContent");
-      sidebar.classList.toggle("open");
-      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
-    }
-
-    // Scroll to section function
+        // Scroll to section function
     function scrollToSection(section) {
       const element = document.getElementById(section);
       element.scrollIntoView({ behavior: 'smooth' });
@@ -358,6 +349,69 @@
     function copyScript(scriptName) {
       console.log(`Script ${scriptName} copied to clipboard!`);
     }
+
+    
+    function copyScript(scriptName) {
+      const scriptText = getScriptByName(scriptName); // Fetch the script text based on the name
+      if (!scriptText) {
+        console.error("Error: Script not found.");
+        alert("Error copying text: Script not found.");
+        return;
+      }
+
+      try {
+        // Create a hidden text area to copy text from
+        const textArea = document.createElement('textarea');
+        textArea.value = scriptText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        textArea.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert("Script copied to clipboard!");
+      } catch (err) {
+        console.error("Error copying text: ", err);
+        alert("Error copying text: " + err.message);
+      }
+    }
+
+    function getScriptByName(name) {
+      const scripts = {
+        'Arise': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'PetsGo': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'Grow': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'Robot': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'Slayer': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'Paint': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'Bioblades': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'Flying': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
+        'Skatboard': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()'
+      };
+
+      return scripts[name];
+    }
+
+
+    // Toggle sidebar visibility and slide content
+    function toggleSidebar() {
+      const sidebar = document.getElementById("discordSidebar");
+      const mainContent = document.getElementById("mainContent");
+      sidebar.classList.toggle("open");
+      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
+    }
+
+    function scrollToSection(section) {
+      const element = document.getElementById(section);
+      window.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth'
+      });
+    }
+
+    // Simulate active members count (replace with actual data)
+    setTimeout(() => {
+      document.getElementById('activeMembers').textContent = '123';
+    }, 2000);
   </script>
 </body>
 </html>
