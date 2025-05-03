@@ -9,192 +9,353 @@
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background-color: #0f0f0f;
+      background-color: #0e0e0e;
       color: #fff;
+      display: flex;
+      height: 100vh;
+      overflow-x: hidden;
+      transition: margin-left 0.5s ease;
     }
+
+    /* Header */
     .header {
-      background-color: #1c1c1c;
-      padding: 20px;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      padding: 30px 40px;
       text-align: center;
-      border-bottom: 2px solid red;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      width: 100%;
     }
+
     .header img {
-      height: 80px;
+      height: 100px;
       margin-bottom: 10px;
     }
+
     .header h1 {
-      margin: 0;
-      color: red;
+      color: #ff4d4d;
+      font-size: 36px;
+      margin-bottom: 10px;
     }
+
+    .header p {
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -260px; /* Initially hidden to the left */
+      width: 260px;
+      height: 100%;
+      background: #1a1a1a;
+      padding: 30px;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      z-index: 10;
+      transition: left 0.5s ease; /* Slide transition */
+    }
+
+    .sidebar.open {
+      left: 0; /* Move to the original position when opened */
+    }
+
+    .sidebar h3 {
+      color: #ff4d4d;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .sidebar p {
+      font-size: 16px;
+      color: #bbb;
+      margin: 5px 0;
+    }
+
+    .discord-btn {
+      background: #ff4d4d;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+
+    .discord-btn:hover {
+      background: #ff1a1a;
+    }
+
+    /* Main content */
+    .main-content {
+      margin-left: 0;
+      padding: 40px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      transition: margin-left 0.5s ease; /* Slide transition for main content */
+    }
+
     .tabs {
       display: flex;
       justify-content: center;
       gap: 30px;
-      background: #141414;
+      background: #1a1a1a;
       padding: 15px;
-      border-bottom: 2px solid red;
+      margin-bottom: 30px;
+      border-radius: 6px;
     }
+
     .tabs button {
-      background: #1c1c1c;
-      color: white;
-      padding: 10px 20px;
-      border: 1px solid red;
+      background: #2a2a2a;
+      color: #fff;
+      padding: 12px 24px;
+      border: 2px solid #ff4d4d;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      transition: 0.3s;
     }
+
     .tabs button:hover {
-      background: red;
+      background: #ff4d4d;
+      border-color: #fff;
     }
-    .script-section, .premium-section {
-      max-width: 1000px;
-      margin: 40px auto;
+
+    /* Script Section */
+    .script-section {
+      max-width: 1200px;
+      width: 100%;
+      margin-top: 40px;
       padding: 20px;
       background: #1c1c1c;
       border-radius: 12px;
-      box-shadow: 0 0 10px red;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
     }
+
     .script-category {
       margin-bottom: 30px;
     }
+
     .script-category h2 {
-      border-bottom: 1px solid #444;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      color: #f44336;
+      font-size: 26px;
+      color: #ff4d4d;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
     }
+
     .script-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
     }
+
     .script-item {
       background: #222;
-      padding: 15px;
+      padding: 20px;
       border-radius: 8px;
       border: 1px solid #333;
-      transition: 0.3s;
+      transition: 0.3s ease;
     }
+
     .script-item:hover {
-      border-color: red;
-      box-shadow: 0 0 10px red;
+      border-color: #ff4d4d;
+      box-shadow: 0 5px 15px rgba(255, 77, 77, 0.7);
     }
+
     .script-title {
-      font-size: 18px;
-      margin-bottom: 10px;
+      font-size: 20px;
       color: #fff;
+      margin-bottom: 12px;
     }
+
     .copy-btn {
-      background: red;
+      background: #ff4d4d;
       color: #fff;
       border: none;
-      padding: 8px 12px;
+      padding: 10px 15px;
       cursor: pointer;
       border-radius: 6px;
-    }
-    .premium-section {
-      text-align: center;
-      background: linear-gradient(145deg, #2a0000, #1a0000);
-      box-shadow: 0 0 15px #ff0000;
-      padding: 40px 20px;
-    }
-    .premium-section h2 {
-      font-size: 28px;
-      color: red;
-    }
-    .premium-section p {
-      margin: 20px auto;
       font-size: 16px;
-      max-width: 600px;
-      color: #ccc;
-    }
-    .premium-section button {
-      font-size: 18px;
-      background: red;
-      border: none;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 8px;
-      cursor: pointer;
       transition: background 0.3s;
     }
-    .premium-section button:hover {
-      background: #ff4d4d;
+
+    .copy-btn:hover {
+      background: #ff1a1a;
     }
+
+    /* Premium Section */
+    .premium-section {
+      max-width: 1200px;
+      width: 100%;
+      padding: 40px 20px;
+      background: linear-gradient(145deg, #2a0000, #1a0000);
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 40px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+    }
+
+    .premium-section h2 {
+      font-size: 36px;
+      color: #ff4d4d;
+      margin-bottom: 20px;
+    }
+
+    .premium-section p {
+      font-size: 18px;
+      color: #ccc;
+      margin: 20px 0;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .premium-section button {
+      font-size: 18px;
+      background: #ff4d4d;
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .premium-section button:hover {
+      background: #ff1a1a;
+    }
+
+    /* Close button */
+    .close-sidebar {
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
   </style>
 </head>
 <body>
-  <div class="header">
-    <img src="https://i.imgur.com/hanj20Z.png" alt="GentleHub Logo">
-    <h1>GentleHub Script Hub</h1>
-    <p>Your destination for Roblox scripts — Fast, Free, and Powerful</p>
+  <!-- Sidebar -->
+  <div class="sidebar" id="discordSidebar">
+    <button class="close-sidebar" onclick="toggleSidebar()">×</button>
+    <h3>GentleHub</h3>
+    <p><strong>Active Members:</strong> <span id="activeMembers">Loading...</span></p>
+    <p><strong>Inactive Members:</strong> 456</p>
+    <a href="https://discord.com/invite/RKhKPBdVJw" class="discord-btn" target="_blank">Join Discord</a>
   </div>
 
-  <div class="tabs">
-    <button onclick="scrollToSection('scripts')">Scripts</button>
-    <button onclick="scrollToSection('premium')">Premium</button>
-  </div>
+  <!-- Main content -->
+  <div class="main-content" id="mainContent">
+    <div class="header">
+      <img src="https://i.imgur.com/hanj20Z.png" alt="GentleHub Logo">
+      <h1>GentleHub Script Hub</h1>
+      <p>Your destination for Roblox scripts — Fast, Free, and Powerful</p>
+    </div>
 
-  <div class="script-section" id="scripts">
-    <div class="script-category">
-      <h2>Featured Scripts</h2>
-      <div class="script-list">
-        <div class="script-item">
-          <div class="script-title">Arise Crossover</div>
-          <button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">PETS GO</div>
-          <button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">Grow a Garden</div>
-          <button class="copy-btn" onclick="copyScript('Grow')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">Robot Evolution</div>
-          <button class="copy-btn" onclick="copyScript('Robot')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">+1 Slayer Blade</div>
-          <button class="copy-btn" onclick="copyScript('Slayer')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">Bioblades RPG</div>
-          <button class="copy-btn" onclick="copyScript('Bio')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">Paint `em</div>
-          <button class="copy-btn" onclick="copyScript('Paint')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">Skateboard Obby</div>
-          <button class="copy-btn" onclick="copyScript('Skate')">Copy Script</button>
-        </div>
-        <div class="script-item">
-          <div class="script-title">Flying Wings Race Sim</div>
-          <button class="copy-btn" onclick="copyScript('Wings')">Copy Script</button>
+    <!-- Tabs -->
+    <div class="tabs">
+      <button onclick="scrollToSection('scripts')">Scripts</button>
+      <button onclick="scrollToSection('premium')">Premium</button>
+    </div>
+
+    <!-- Script Section -->
+    <div class="script-section" id="scripts">
+      <div class="script-category">
+        <h2>Featured Scripts</h2>
+        <div class="script-list">
+          <!-- Add feature scripts here -->
+          <div class="script-item">
+            <div class="script-title">Arise Crossover</div>
+            <button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button>
+          </div>
+          <div class="script-item">
+            <div class="script-title">PETS GO</div>
+            <button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Grow a Garden</div>
+            <button class="copy-btn" onclick="copyScript('Grow')">Copy Script</button>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Robot Evolution</div>
+            <button class="copy-btn" onclick="copyScript('Robot')">Copy Script</button>
+          </div>
+          <div class="script-item">
+            <div class="script-title">+1 Slayer Blade</div>
+            <button class="copy-btn" onclick="copyScript('Slayer')">Copy Script</button>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Paint 'em'</div>
+            <button class="copy-btn" onclick="copyScript('Paint')">Copy Script</button>
+            </div>
+          <div class="script-item">
+            <div class="script-title">Bioblades RPG</div>
+            <button class="copy-btn" onclick="copyScript('Bioblades')">Copy Script</button>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Skateboard Obby</div>
+            <button class="copy-btn" onclick="copyScript('Skateboard')">Copy Script</button>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Flying Wings Race Sim</div>
+            <button class="copy-btn" onclick="copyScript('Flying Wings Race')">Copy Script</button>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="premium-section" id="premium">
-    <h2>Unlock Premium Access</h2>
-    <p>Gain early access to exclusive scripts, premium-only tools, and personal support from the creator. Get an edge in your favorite games.</p>
-    <button onclick="window.location.href='https://payhip.com/Alezepremium'">Buy Premium</button>
+    <!-- Premium Section -->
+<div class="premium-section" id="premium">
+  <h2>Become Premium</h2>
+  <p>Get access to exclusive scripts and features by becoming a premium member. Buy today!</p>
+  <button onclick="window.location.href='https://payhip.com/Alezepremium'">Buy Premium</button>
+</div>
+
   </div>
 
   <script>
-    function copyScript(game) {
-      const url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games\"))()";
-      navigator.clipboard.writeText(url).then(() => {
-        alert("Copied script for: " + game);
-      });
+    // Function to update the active members count
+    function updateActiveMembers() {
+      const activeMembersCount = Math.floor(Math.random() * 500) + 100;
+      document.getElementById("activeMembers").innerText = activeMembersCount;
     }
 
-    function scrollToSection(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    setInterval(updateActiveMembers, 5000);  // Update every 5 seconds
+    updateActiveMembers();  // Initial update
+
+    // Toggle sidebar visibility and slide content
+    function toggleSidebar() {
+      const sidebar = document.getElementById("discordSidebar");
+      const mainContent = document.getElementById("mainContent");
+      sidebar.classList.toggle("open");
+      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
+    }
+
+    // Scroll to section function
+    function scrollToSection(section) {
+      const element = document.getElementById(section);
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Copy script function
+    function copyScript(scriptName) {
+      console.log(`Script ${scriptName} copied to clipboard!`);
     }
   </script>
 </body>
