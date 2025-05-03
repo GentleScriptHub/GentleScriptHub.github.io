@@ -18,9 +18,33 @@
       text-align: center;
       border-bottom: 2px solid red;
     }
+    .header img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
     .header h1 {
       margin: 0;
       color: red;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: #141414;
+      padding: 15px;
+      border-bottom: 2px solid red;
+    }
+    .tabs button {
+      background: #1c1c1c;
+      color: white;
+      padding: 10px 20px;
+      border: 1px solid red;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .tabs button:hover {
+      background: red;
     }
     .script-section, .premium-section {
       max-width: 1000px;
@@ -101,11 +125,17 @@
 </head>
 <body>
   <div class="header">
+    <img src="https://i.imgur.com/hanj20Z.png" alt="GentleHub Logo">
     <h1>GentleHub Script Hub</h1>
     <p>Your destination for Roblox scripts — Fast, Free, and Powerful</p>
   </div>
 
-  <div class="script-section">
+  <div class="tabs">
+    <button onclick="scrollToSection('scripts')">Scripts</button>
+    <button onclick="scrollToSection('premium')">Premium</button>
+  </div>
+
+  <div class="script-section" id="scripts">
     <div class="script-category">
       <h2>Featured Scripts</h2>
       <div class="script-list">
@@ -149,7 +179,7 @@
     </div>
   </div>
 
-  <div class="premium-section">
+  <div class="premium-section" id="premium">
     <h2>Unlock Premium Access</h2>
     <p>Gain early access to exclusive scripts, premium-only tools, and personal support from the creator. Get an edge in your favorite games.</p>
     <button onclick="window.location.href='https://payhip.com/Alezepremium'">Buy Premium</button>
@@ -161,6 +191,10 @@
       navigator.clipboard.writeText(url).then(() => {
         alert("Copied script for: " + game);
       });
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
