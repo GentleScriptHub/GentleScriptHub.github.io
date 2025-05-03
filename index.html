@@ -3,43 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GentleHub - Script Hub</title>
+  <title>GentleHub Scripts</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
+      background-color: #0e0e0e;
       color: #eee;
+      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 2rem;
     }
-    header {
-      background-color: #1a1a1a;
-      padding: 20px;
+    h1 {
+      color: #ff2c2c;
       text-align: center;
-      font-size: 2em;
-      font-weight: bold;
-      color: #ff4d4d;
     }
-    .container {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 20px;
+    .script-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
-    .script {
-      background-color: #1f1f1f;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-left: 5px solid #ff4d4d;
+    .script-card {
+      background: #1b1b1b;
+      border: 1px solid #444;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
     }
-    .script h2 {
-      margin-top: 0;
+    .script-card h2 {
+      margin: 0 0 0.5rem;
+      color: #fff;
     }
-    .script code {
-      background-color: #2a2a2a;
-      padding: 5px;
-      display: block;
-      margin: 10px 0;
-      color: #0f0;
+    .script-card p {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    button, a {
+      background: #ff2c2c;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover, a:hover {
+      background: #e31b1b;
     }
     .premium {
       background-color: #222;
@@ -65,67 +74,72 @@
 <body>
   <header>GentleHub - Script Hub</header>
   <div class="container">
-
-    <div class="script">
+    
+  </style>
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Loadstring copied to clipboard!');
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>GentleHub Script Hub</h1>
+  <div class="script-list">
+    <div class="script-card">
       <h2>Arise Crossover</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/AriseCrossover.lua"))()</code>
-      <p>Features: Auto Farm, Auto Attack (Single & All), Pets Attack, Teleports, Misc, and more.</p>
+      <p>Auto Farm, Auto Attack, Teleports, and more</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/AriseCrossover.lua'))()`)">📋 Copy Loadstring</button>
+      <a href="/scripts/arise-crossover.txt" download>⬇ Download</a>
     </div>
-
-    <div class="script">
-      <h2>PETS GO</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/PetsGo.lua"))()</code>
-      <p>Features: Auto Arcade, Rebirth Options, Upgrades, Auto Roll.</p>
+    <div class="script-card">
+      <h2>Pets Go</h2>
+      <p>Auto Arcade, Rebirths, Roll, and Upgrades</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/PetsGo.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="script">
+    <div class="script-card">
       <h2>Grow a Garden</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/GrowAGarden.lua"))()</code>
-      <p>Features: Auto Farm, Sell, Quests, Dupe, Shops, Auto Collect.</p>
+      <p>Auto Plant, Fruit Farming, Sell, Daily Quest</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/GrowAGarden.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="script">
+    <div class="script-card">
       <h2>Robot Evolution</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/RobotEvolution.lua"))()</code>
-      <p>Features: Kill Aura, Auto Farm, Merge, Rewards, World TP.</p>
+      <p>Kill Aura, Auto Farm, Merge, Teleports</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/RobotEvolution.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="script">
+    <div class="script-card">
       <h2>+1 Slayer Blade</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/SlayerBlade.lua"))()</code>
-      <p>Features: Auto Click, Delay, Friend Bonus.</p>
+      <p>Auto Click, Friends Bonus, Delay</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/SlayerBlade.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="script">
+    <div class="script-card">
       <h2>Bioblades RPG</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/BiobladesRPG.lua"))()</code>
-      <p>Features: Kill Aura, Auto Farm, NPCs, Questing, Teleport.</p>
+      <p>Kill Aura, Auto Farm, Quest Fixes</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/Bioblades.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="script">
+    <div class="script-card">
       <h2>Paint 'em</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/PaintEm.lua"))()</code>
-      <p>Features: Auto Paint, Kill Players/NPCs, Teleport, Bring Functions.</p>
+      <p>Auto Paint, Kill NPCs/Players, Infinite Money</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/PaintEm.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="script">
+    <div class="script-card">
       <h2>Skateboard Obby</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/SkateboardObby.lua"))()</code>
-      <p>Features: Auto Checkpoint, AFK Mode, Buy Trails/Boards, Rewards.</p>
+      <p>Auto Checkpoints, Rewards, Trails, Boards</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/SkateboardObby.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="script">
-      <h2>Flying Wings Race Simulator</h2>
-      <code>loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/FlyingWings.lua"))()</code>
-      <p>Features: Auto Collect, Auto Rebirth, Claim Gifts, Spin, Buy Wings.</p>
+    <div class="script-card">
+      <h2>Flying Wings Race</h2>
+      <p>Feathers, Rebirths, Pets, Wings</p>
+      <button onclick="copyToClipboard(`loadstring(game:HttpGet('https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games/FlyingWings.lua'))()`)">📋 Copy Loadstring</button>
     </div>
-
-    <div class="premium">
-      <h2>Buy GentleHub Premium</h2>
-      <p>Unlock exclusive scripts, faster updates, and priority support.</p>
-      <button onclick="window.location.href='https://your-premium-link.com'">Buy Premium</button>
-    </div>
-
   </div>
+  <div class="premium">
+    <h2>Buy GentleHub Premium</h2>
+    <p>Unlock exclusive scripts, faster updates, and priority support.</p>
+    <button onclick="window.location.href='https://your-premium-link.com'">Buy Premium</button>
+  </div>
+
+</div>
 </body>
 </html>
