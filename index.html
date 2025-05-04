@@ -341,7 +341,7 @@
 
     function copyScript(scriptName) {
       const dummy = document.createElement('textarea');
-      dummy.value = `-- Script for ${scriptName}\nprint("Running ${scriptName}")`;
+      dummy.value = `-- Script for ${scriptName}\nloadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()`;
       document.body.appendChild(dummy);
       dummy.select();
       document.execCommand("copy");
