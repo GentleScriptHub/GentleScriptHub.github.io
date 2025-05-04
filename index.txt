@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GentleHub Scripts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+    }
+    .header {
+      background-color: #1c1c1c;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid red;
+    }
+    .header img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      margin: 0;
+      color: red;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: #141414;
+      padding: 15px;
+      border-bottom: 2px solid red;
+    }
+    .tabs button {
+      background: #1c1c1c;
+      color: white;
+      padding: 10px 20px;
+      border: 1px solid red;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .tabs button:hover {
+      background: red;
+    }
+    .script-section, .premium-section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #1c1c1c;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+    }
+    .script-category {
+      margin-bottom: 30px;
+    }
+    .script-category h2 {
+      border-bottom: 1px solid #444;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      color: #f44336;
+    }
+    .script-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+    .script-item {
+      background: #222;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      transition: 0.3s;
+    }
+    .script-item:hover {
+      border-color: red;
+      box-shadow: 0 0 10px red;
+    }
+    .script-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .copy-btn {
+      background: red;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .premium-section {
+      text-align: center;
+      background: linear-gradient(145deg, #2a0000, #1a0000);
+      box-shadow: 0 0 15px #ff0000;
+      padding: 40px 20px;
+    }
+    .premium-section h2 {
+      font-size: 28px;
+      color: red;
+    }
+    .premium-section p {
+      margin: 20px auto;
+      font-size: 16px;
+      max-width: 600px;
+      color: #ccc;
+    }
+    .premium-section button {
+      font-size: 18px;
+      background: red;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .premium-section button:hover {
+      background: #ff4d4d;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://i.imgur.com/hanj20Z.png" alt="GentleHub Logo">
+    <h1>GentleHub Script Hub</h1>
+    <p>Your destination for Roblox scripts — Fast, Free, and Powerful</p>
+  </div>
+
+  <div class="tabs">
+    <button onclick="scrollToSection('scripts')">Scripts</button>
+    <button onclick="scrollToSection('premium')">Premium</button>
+  </div>
+
+  <div class="script-section" id="scripts">
+    <div class="script-category">
+      <h2>Featured Scripts</h2>
+      <div class="script-list">
+        <div class="script-item">
+          <div class="script-title">Arise Crossover</div>
+          <button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">PETS GO</div>
+          <button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">Grow a Garden</div>
+          <button class="copy-btn" onclick="copyScript('Grow')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">Robot Evolution</div>
+          <button class="copy-btn" onclick="copyScript('Robot')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">+1 Slayer Blade</div>
+          <button class="copy-btn" onclick="copyScript('Slayer')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">Bioblades RPG</div>
+          <button class="copy-btn" onclick="copyScript('Bio')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">Paint `em</div>
+          <button class="copy-btn" onclick="copyScript('Paint')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">Skateboard Obby</div>
+          <button class="copy-btn" onclick="copyScript('Skate')">Copy Script</button>
+        </div>
+        <div class="script-item">
+          <div class="script-title">Flying Wings Race Sim</div>
+          <button class="copy-btn" onclick="copyScript('Wings')">Copy Script</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="premium-section" id="premium">
+    <h2>Unlock Premium Access</h2>
+    <p>Gain early access to exclusive scripts, premium-only tools, and personal support from the creator. Get an edge in your favorite games.</p>
+    <button onclick="window.location.href='https://your-premium-page.com'">Buy Premium</button>
+  </div>
+
+  <script>
+    function copyScript(game) {
+      const url = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/GentleScriptHub/GentleHub/main/Games\"))()";
+      navigator.clipboard.writeText(url).then(() => {
+        alert("Copied script for: " + game);
+      });
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
