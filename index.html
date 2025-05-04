@@ -336,19 +336,24 @@
 
   <script>
 
-function scrollToSection(id) {
-    document.getElementById('keyLinks').style.display = 'none';
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-  }
+function showCategory(category) {
+  const keyLinksSection = document.getElementById('keyLinks');
 
-  function showCategory(category) {
-    // Hide all script sections
-    document.getElementById('scripts').style.display = 'none';
-    document.getElementById('keyLinks').style.display = 'block';
-    
-    // Optionally scroll to it
-    document.getElementById('keyLinks').scrollIntoView({ behavior: 'smooth' });
+    // Hide all category sections if needed
+    const allSections = document.querySelectorAll('.script-section > div');
+    allSections.forEach(section => {
+      if (section !== keyLinksSection) {
+        section.style.display = 'none';
+      }
+    });
+
+        // Toggle visibility of Key Links
+        if (category === 'key') {
+      keyLinksSection.style.display = 'block';
+      keyLinksSection.scrollIntoView({ behavior: 'smooth' });
+    }
   }
+  
     // Show/hide sidebar
     function toggleSidebar() {
       document.getElementById('discordSidebar').classList.toggle('open');
