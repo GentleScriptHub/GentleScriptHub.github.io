@@ -293,9 +293,11 @@
         </div>
       </div>
       
+      
       <div style="margin-bottom: 30px; text-align: center;">
         <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Search for a script..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 6px; border: 1px solid #333; background-color: #1a1a1a; color: white;">
-      </div>      
+      </div> 
+      
       <div class="script-category">
         <h2>Featured Scripts</h2>
         <div class="script-list">
@@ -335,82 +337,49 @@
   </div>
 
   <script>
-
-function showCategory(category) {
-  const keyLinksSection = document.getElementById('keyLinks');
-
-    // Hide all category sections if needed
-    const allSections = document.querySelectorAll('.script-section > div');
-    allSections.forEach(section => {
-      if (section !== keyLinksSection) {
-        section.style.display = 'none';
-      }
+    // Welcome Screen Delay
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("welcomeScreen").classList.add("hidden");
+      }, 2000);
     });
 
-        // Toggle visibility of Key Links
-        if (category === 'key') {
-      keyLinksSection.style.display = 'block';
-      keyLinksSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-  
-    // Show/hide sidebar
+    // Sidebar Toggle
     function toggleSidebar() {
-      document.getElementById('discordSidebar').classList.toggle('open');
+      document.getElementById("discordSidebar").classList.toggle("open");
     }
-  
-    // Scroll to section smoothly
-    function scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-      }
-  
-      // Reset any category-specific views
-      if (sectionId === 'scripts') {
-        document.getElementById('scripts').style.display = 'block';
-      }
+
+    // Scroll to Section
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      if (id !== 'key') document.getElementById("key").style.display = 'none';
     }
-  
-    // Dummy handler for Key Links
-    function showCategory(category) {
-      if (category === 'key') {
-        alert("Key Links section clicked (implement actual UI behavior here)");
-      }
+
+    // Show Category (Key Links)
+    function showCategory(id) {
+      const section = document.getElementById(id);
+      section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
     }
-  
-    // Simulated copy script function
-    function copyScript(scriptName) {
-      const scripts = {
-        Arise: 'print("Arise script loaded")',
-        PetsGo: 'print("PetsGo script loaded")',
-        Grow: 'print("Grow a Garden script loaded")',
-        Robot: 'print("Robot Evolution script loaded")',
-        Slayer: 'print("+1 Slayer Blade script loaded")',
-        Paint: 'print("Paint \'em\' script loaded")',
-      };
-  
-      if (scripts[scriptName]) {
-        navigator.clipboard.writeText(scripts[scriptName]).then(() => {
-          alert(`Copied ${scriptName} script to clipboard!`);
-        });
-      }
+
+    // Copy Script Function
+    function copyScript(scriptContent) {
+      navigator.clipboard.writeText(scriptContent).then(() => {
+        alert("Script copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy script.");
+        console.error(err);
+      });
     }
-  
+
+    // Filter Scripts
     function filterScripts() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const items = document.querySelectorAll(".script-item");
-
-    items.forEach(item => {
-      const title = item.querySelector(".script-title").textContent.toLowerCase();
-      item.style.display = title.includes(input) ? "" : "none";
-    });
-  }
-
-  // Welcome screen fade out
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById("welcomeScreen").classList.add("hidden");
-    }, 1500);
-  });
-</script>
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const scripts = document.querySelectorAll("#scriptList .script-item");
+      scripts.forEach(script => {
+        const title = script.querySelector(".script-title").textContent.toLowerCase();
+        script.style.display = title.includes(input) ? "block" : "none";
+      });
+    }
+  </script>
+</body>
+</html>
