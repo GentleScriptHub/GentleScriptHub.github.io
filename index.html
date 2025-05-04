@@ -338,8 +338,8 @@
 
   <script>
 
-     // Toggle sidebar visibility and slide content
-     function toggleSidebar() {
+    // Toggle sidebar visibility and slide content
+    function toggleSidebar() {
       const sidebar = document.getElementById("discordSidebar");
       const mainContent = document.getElementById("mainContent");
       sidebar.classList.toggle("open");
@@ -354,6 +354,12 @@
       });
     }
 
+    // Simulate active members count (replace with actual data)
+    setTimeout(() => {
+      document.getElementById('activeMembers').textContent = '123';
+    }, 2000);
+
+    
     // Welcome Screen Delay
     window.addEventListener("load", () => {
       setTimeout(() => {
