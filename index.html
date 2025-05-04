@@ -271,6 +271,7 @@
     <div class="tabs">
       <button onclick="scrollToSection('scripts')">Scripts</button>
       <button onclick="scrollToSection('premium')">Premium</button>
+      <button onclick="showCategory('key')">Key Links</button>
     </div>
 
     <div class="script-section" id="scripts">
@@ -290,6 +291,21 @@
           <div class="script-item"><div class="script-title">Skateboard Obby</div><button class="copy-btn" onclick="copyScript('Skateboard')">Copy Script</button></div>
           <div class="script-item"><div class="script-title">Flying Wings Race Sim</div><button class="copy-btn" onclick="copyScript('Flying')">Copy Script</button></div>
         </div>
+        <div class="script-category" id="key" style="display: none;">
+          <h2 style="margin-top: 0;">🔑 Key Links</h2>
+
+          <div class="script-item">
+            <div class="script-title">Main Key System</div>
+            <div class="script-description">Use this to generate your access key.</div>
+            <a class="script-button" href="https://your-key-system-link.com" target="_blank">Get Key</a>
+          </div>
+        
+          <div class="script-item">
+            <div class="script-title">Backup Key Site</div>
+            <div class="script-description">If the main one is down, use this one.</div>
+            <a class="script-button" href="https://backup-key-link.com" target="_blank">Visit Backup</a>
+          </div>
+        </div>        
       </div>
     </div>
 
@@ -313,6 +329,14 @@
         section.scrollIntoView({ behavior: 'smooth' });
       }
     }
+
+    //key
+    function showCategory(categoryId) {
+  const categories = document.querySelectorAll('.script-category');
+  categories.forEach(category => {
+    category.style.display = category.id === categoryId ? 'block' : 'none';
+  });
+}
 
 //Search
   function filterScripts() {
