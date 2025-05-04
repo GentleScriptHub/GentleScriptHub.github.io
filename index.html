@@ -3,18 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GentleHub Scripts</title>
+  <title>GentleHub</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
       background-color: #0e0e0e;
       color: #fff;
-      display: flex;
-      height: 100vh;
       overflow-x: hidden;
-      transition: margin-left 0.5s ease;
+    }
+
+    /* Welcome Screen */
+    #welcomeScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: #0e0e0e;
+      color: #ff4d4d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #welcomeScreen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #welcomeScreen h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+
+    #welcomeScreen p {
+      font-size: 20px;
+      color: #ccc;
     }
 
     /* Header */
@@ -46,7 +79,7 @@
     .sidebar {
       position: fixed;
       top: 0;
-      left: -260px; /* Initially hidden to the left */
+      left: -260px;
       width: 260px;
       height: 100%;
       background: #1a1a1a;
@@ -55,13 +88,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
       z-index: 10;
-      transition: left 0.5s ease; /* Slide transition */
+      transition: left 0.5s ease;
     }
 
     .sidebar.open {
-      left: 0; /* Move to the original position when opened */
+      left: 0;
     }
 
     .sidebar h3 {
@@ -91,7 +123,19 @@
       background: #ff1a1a;
     }
 
-    /* Main content */
+    .close-sidebar {
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
     .main-content {
       margin-left: 0;
       padding: 40px;
@@ -99,8 +143,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      overflow-y: auto;
-      transition: margin-left 0.5s ease; /* Slide transition for main content */
     }
 
     .tabs {
@@ -129,7 +171,6 @@
       border-color: #fff;
     }
 
-    /* Script Section */
     .script-section {
       max-width: 1200px;
       width: 100%;
@@ -192,7 +233,6 @@
       background: #ff1a1a;
     }
 
-    /* Premium Section */
     .premium-section {
       max-width: 1200px;
       width: 100%;
@@ -233,25 +273,16 @@
     .premium-section button:hover {
       background: #ff1a1a;
     }
-
-    /* Close button */
-    .close-sidebar {
-      position: absolute;
-      top: 20px;
-      right: -30px;
-      background: #ff4d4d;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-    }
-
   </style>
 </head>
 <body>
+
+  <!-- Welcome Screen -->
+  <div id="welcomeScreen">
+    <h1>Welcome to GentleHub</h1>
+    <p>Loading your scripts...</p>
+  </div>
+
   <!-- Sidebar -->
   <div class="sidebar" id="discordSidebar">
     <button class="close-sidebar" onclick="toggleSidebar()">×</button>
@@ -261,7 +292,7 @@
     <a href="https://discord.com/invite/RKhKPBdVJw" class="discord-btn" target="_blank">Join Discord</a>
   </div>
 
-  <!-- Main content -->
+  <!-- Main Content -->
   <div class="main-content" id="mainContent">
     <div class="header">
       <img src="https://i.imgur.com/hanj20Z.png" alt="GentleHub Logo">
@@ -269,149 +300,61 @@
       <p>Your destination for Roblox scripts — Fast, Free, and Powerful</p>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs">
       <button onclick="scrollToSection('scripts')">Scripts</button>
       <button onclick="scrollToSection('premium')">Premium</button>
     </div>
 
-    <!-- Script Section -->
     <div class="script-section" id="scripts">
       <div class="script-category">
         <h2>Featured Scripts</h2>
         <div class="script-list">
-          <!-- Add feature scripts here -->
-          <div class="script-item">
-            <div class="script-title">Arise Crossover</div>
-            <button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button>
-          </div>
-          <div class="script-item">
-            <div class="script-title">PETS GO</div>
-            <button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button>
-          </div>
-          <div class="script-item">
-            <div class="script-title">Grow a Garden</div>
-            <button class="copy-btn" onclick="copyScript('Grow')">Copy Script</button>
-          </div>
-          <div class="script-item">
-            <div class="script-title">Robot Evolution</div>
-            <button class="copy-btn" onclick="copyScript('Robot')">Copy Script</button>
-          </div>
-          <div class="script-item">
-            <div class="script-title">+1 Slayer Blade</div>
-            <button class="copy-btn" onclick="copyScript('Slayer')">Copy Script</button>
-          </div>
-          <div class="script-item">
-            <div class="script-title">Paint 'em'</div>
-            <button class="copy-btn" onclick="copyScript('Paint')">Copy Script</button>
-            </div>
-          <div class="script-item">
-            <div class="script-title">Bioblades RPG</div>
-            <button class="copy-btn" onclick="copyScript('Bioblades')">Copy Script</button>
-          </div>
-          <div class="script-item">
-            <div class="script-title">Skateboard Obby</div>
-            <button class="copy-btn" onclick="copyScript('Skateboard')">Copy Script</button>
-          </div>
-          <div class="script-item">
-            <div class="script-title">Flying Wings Race Sim</div>
-            <button class="copy-btn" onclick="copyScript('Flying')">Copy Script</button>
+          <div class="script-item"><div class="script-title">Arise Crossover</div><button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">PETS GO</div><button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Grow a Garden</div><button class="copy-btn" onclick="copyScript('Grow')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Robot Evolution</div><button class="copy-btn" onclick="copyScript('Robot')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">+1 Slayer Blade</div><button class="copy-btn" onclick="copyScript('Slayer')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Paint 'em'</div><button class="copy-btn" onclick="copyScript('Paint')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Bioblades RPG</div><button class="copy-btn" onclick="copyScript('Bioblades')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Skateboard Obby</div><button class="copy-btn" onclick="copyScript('Skateboard')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Flying Wings Race Sim</div><button class="copy-btn" onclick="copyScript('Flying')">Copy Script</button></div>
         </div>
       </div>
     </div>
 
-      <!-- Premium Section -->
-<div class="premium-section" id="premium">
-  <h2>Become Premium</h2>
-  <p>Get access to exclusive scripts and features by becoming a premium member. Buy today!</p>
-  <button onclick="window.location.href='https://payhip.com/Alezepremium'">Buy Premium</button>
-</div>
-
+    <div class="premium-section" id="premium">
+      <h2>Upgrade to Premium</h2>
+      <p>Unlock exclusive features and premium scripts only available to members. Get your edge today!</p>
+      <button onclick="window.open('https://discord.com/invite/RKhKPBdVJw', '_blank')">Join Premium</button>
+    </div>
   </div>
 
   <script>
-     // Function to update the active members count
-    function updateActiveMembers() {
-      const activeMembersCount = Math.floor(Math.random() * 500) + 100;
-      document.getElementById("activeMembers").innerText = activeMembersCount;
-    }
-
-    setInterval(updateActiveMembers, 5000);  // Update every 5 seconds
-    updateActiveMembers();  // Initial update
-
-        // Scroll to section function
-    function scrollToSection(section) {
-      const element = document.getElementById(section);
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Copy script function
-    function copyScript(scriptName) {
-      console.log(`Script ${scriptName} copied to clipboard!`);
-    }
-
-    
-    function copyScript(scriptName) {
-      const scriptText = getScriptByName(scriptName); // Fetch the script text based on the name
-      if (!scriptText) {
-        console.error("Error: Script not found.");
-        alert("Error copying text: Script not found.");
-        return;
-      }
-
-      try {
-        // Create a hidden text area to copy text from
-        const textArea = document.createElement('textarea');
-        textArea.value = scriptText;
-        document.body.appendChild(textArea);
-        textArea.select();
-        textArea.setSelectionRange(0, 99999); // For mobile devices
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        alert("Script copied to clipboard!");
-      } catch (err) {
-        console.error("Error copying text: ", err);
-        alert("Error copying text: " + err.message);
-      }
-    }
-
-    function getScriptByName(name) {
-      const scripts = {
-        'Arise': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'PetsGo': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'Grow': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'Robot': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'Slayer': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'Paint': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'Bioblades': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'Flying': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()',
-        'Skatboard': 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()'
-      };
-
-      return scripts[name];
-    }
-
-
-    // Toggle sidebar visibility and slide content
     function toggleSidebar() {
-      const sidebar = document.getElementById("discordSidebar");
-      const mainContent = document.getElementById("mainContent");
-      sidebar.classList.toggle("open");
-      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
+      const sidebar = document.getElementById('discordSidebar');
+      sidebar.classList.toggle('open');
     }
 
-    function scrollToSection(section) {
-      const element = document.getElementById(section);
-      window.scrollTo({
-        top: element.offsetTop,
-        behavior: 'smooth'
-      });
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Simulate active members count (replace with actual data)
-    setTimeout(() => {
-      document.getElementById('activeMembers').textContent = '123';
-    }, 2000);
+    function copyScript(scriptName) {
+      const dummy = document.createElement('textarea');
+      dummy.value = `-- Script for ${scriptName}\nprint("Running ${scriptName}")`;
+      document.body.appendChild(dummy);
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+      alert(`${scriptName} script copied to clipboard!`);
+    }
+
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('welcomeScreen').classList.add('hidden');
+      }, 2000); // 2-second delay before hiding welcome screen
+    };
   </script>
+
 </body>
 </html>
