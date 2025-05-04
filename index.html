@@ -317,55 +317,70 @@
   </div>
 
   <script>
+    // Show/hide sidebar
     function toggleSidebar() {
-      const sidebar = document.getElementById('discordSidebar');
-      sidebar.classList.toggle('open');
+      document.getElementById('discordSidebar').classList.toggle('open');
     }
-
-    // Scroll to section
-    function scrollToSection(id) {
-      const section = document.getElementById(id);
+  
+    // Scroll to section smoothly
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView({ behavior: 'smooth' });
       }
+  
+      // Reset any category-specific views
+      if (sectionId === 'scripts') {
+        document.getElementById('scripts').style.display = 'block';
+      }
     }
-
-    //key
-    function showCategory(categoryId) {
-  const categories = document.querySelectorAll('.script-category');
-  categories.forEach(category => {
-    category.style.display = category.id === categoryId ? 'block' : 'none';
-  });
-}
-
-//Search
-  function filterScripts() {
-  const input = document.getElementById('searchInput');
-  const filter = input.value.toUpperCase();
-  const items = document.querySelectorAll('.script-item');
-
-  items.forEach(item => {
-    const title = item.querySelector('.script-title').textContent || '';
-    item.style.display = title.toUpperCase().includes(filter) ? '' : 'none';
-  });
-}
-
+  
+    // Dummy handler for Key Links
+    function showCategory(category) {
+      if (category === 'key') {
+        alert("Key Links section clicked (implement actual UI behavior here)");
+      }
+    }
+  
+    // Filter scripts
+    function filterScripts() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toUpperCase();
+      const items = document.querySelectorAll('.script-item');
+  
+      items.forEach(item => {
+        const title = item.querySelector('.script-title');
+        if (title.textContent.toUpperCase().includes(filter)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+  
+    // Simulated copy script function
     function copyScript(scriptName) {
-      const dummy = document.createElement('textarea');
-      dummy.value = `-- Script for ${scriptName}\nloadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()`;
-      document.body.appendChild(dummy);
-      dummy.select();
-      document.execCommand("copy");
-      document.body.removeChild(dummy);
-      alert(`${scriptName} script copied to clipboard!`);
+      const scripts = {
+        Arise: 'print("Arise script loaded")',
+        PetsGo: 'print("PetsGo script loaded")',
+        Grow: 'print("Grow a Garden script loaded")',
+        Robot: 'print("Robot Evolution script loaded")',
+        Slayer: 'print("+1 Slayer Blade script loaded")',
+        Paint: 'print("Paint \'em\' script loaded")',
+      };
+  
+      if (scripts[scriptName]) {
+        navigator.clipboard.writeText(scripts[scriptName]).then(() => {
+          alert(`Copied ${scriptName} script to clipboard!`);
+        });
+      }
     }
-
-    window.onload = () => {
+  
+    // Welcome screen fade-out
+    window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('welcomeScreen').classList.add('hidden');
-      }, 2000); // 2-second delay before hiding welcome screen
-    };
+      }, 2000);
+    });
   </script>
-
-</body>
-</html>
+  
