@@ -371,15 +371,15 @@
       });
     }
 
-    // Filter Scripts
     function filterScripts() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const scripts = document.querySelectorAll("#scriptList .script-item");
-      scripts.forEach(script => {
-        const title = script.querySelector(".script-title").textContent.toLowerCase();
-        script.style.display = title.includes(input) ? "block" : "none";
-      });
-    }
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const items = document.querySelectorAll(".script-item");
+
+    items.forEach(item => {
+      const title = item.querySelector(".script-title").textContent.toLowerCase();
+      item.style.display = title.includes(input) ? "" : "none";
+    });
+  }
   </script>
 </body>
 </html>
