@@ -275,6 +275,24 @@
     </div>
 
     <div class="script-section" id="scripts">
+      <div class="script-section" id="keyLinks" style="display: none;">
+        <h2>Key Links</h2>
+        <div class="script-list">
+          <div class="script-item">
+            <div class="script-title">Key Site</div>
+            <a href="https://linkvertise.com" target="_blank" class="copy-btn">Visit</a>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Backup Key</div>
+            <a href="https://backup-link.com" target="_blank" class="copy-btn">Visit</a>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Unlock Instructions</div>
+            <a href="https://gentlehub.com/unlock" target="_blank" class="copy-btn">View</a>
+          </div>
+        </div>
+      </div>
+      
       <div style="margin-bottom: 30px; text-align: center;">
         <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Search for a script..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 6px; border: 1px solid #333; background-color: #1a1a1a; color: white;">
       </div>      
@@ -317,6 +335,20 @@
   </div>
 
   <script>
+
+function scrollToSection(id) {
+    document.getElementById('keyLinks').style.display = 'none';
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function showCategory(category) {
+    // Hide all script sections
+    document.getElementById('scripts').style.display = 'none';
+    document.getElementById('keyLinks').style.display = 'block';
+    
+    // Optionally scroll to it
+    document.getElementById('keyLinks').scrollIntoView({ behavior: 'smooth' });
+  }
     // Show/hide sidebar
     function toggleSidebar() {
       document.getElementById('discordSidebar').classList.toggle('open');
@@ -342,22 +374,6 @@
       }
     }
   
-    // Filter scripts
-    function filterScripts() {
-      const input = document.getElementById('searchInput');
-      const filter = input.value.toUpperCase();
-      const items = document.querySelectorAll('.script-item');
-  
-      items.forEach(item => {
-        const title = item.querySelector('.script-title');
-        if (title.textContent.toUpperCase().includes(filter)) {
-          item.style.display = '';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    }
-  
     // Simulated copy script function
     function copyScript(scriptName) {
       const scripts = {
@@ -376,11 +392,20 @@
       }
     }
   
-    // Welcome screen fade-out
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('welcomeScreen').classList.add('hidden');
-      }, 2000);
+    function filterScripts() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const items = document.querySelectorAll(".script-item");
+
+    items.forEach(item => {
+      const title = item.querySelector(".script-title").textContent.toLowerCase();
+      item.style.display = title.includes(input) ? "" : "none";
     });
-  </script>
-  
+  }
+
+  // Welcome screen fade out
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById("welcomeScreen").classList.add("hidden");
+    }, 1500);
+  });
+</script>
