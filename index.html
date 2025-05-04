@@ -337,6 +337,23 @@
   </div>
 
   <script>
+
+     // Toggle sidebar visibility and slide content
+     function toggleSidebar() {
+      const sidebar = document.getElementById("discordSidebar");
+      const mainContent = document.getElementById("mainContent");
+      sidebar.classList.toggle("open");
+      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
+    }
+
+    function scrollToSection(section) {
+      const element = document.getElementById(section);
+      window.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth'
+      });
+    }
+
     // Welcome Screen Delay
     window.addEventListener("load", () => {
       setTimeout(() => {
