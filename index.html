@@ -382,8 +382,8 @@ function showCategory(id) {
   }
 
     // Copy Script Function
-    function copyScript(loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()) {
-      navigator.clipboard.writeText(loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()).then(() => {
+    function copyScript(scriptContent) {
+      navigator.clipboard.writeText(scriptContent).then(() => {
         alert("Script copied to clipboard!");
       }).catch(err => {
         alert("Failed to copy script.");
