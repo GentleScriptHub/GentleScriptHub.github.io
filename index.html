@@ -1,277 +1,409 @@
-html
-Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GentleHub Script Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #1d1d1d;
-            color: #fff;
-        }
-        h1, h2, p {
-            margin: 0;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* Welcome Screen */
-        #welcome {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ff4d4d;
-            font-size: 3rem;
-            z-index: 10;
-            animation: fadeOut 5s forwards;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; display: none; }
-        }
-
-        /* Header Section */
-        header {
-            padding: 20px;
-            background: linear-gradient(135deg, #ff4d4d, #b30000);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        header h1 {
-            font-size: 2rem;
-            color: white;
-        }
-        header p {
-            font-size: 1.1rem;
-            color: #f2f2f2;
-        }
-
-        /* Sidebar */
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background: #1a1a1a;
-            transition: left 0.3s ease-in-out;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 5;
-        }
-        #sidebar.active {
-            left: 0;
-        }
-        #sidebar .close-btn {
-            color: #ff4d4d;
-            font-size: 2rem;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-        #sidebar .discord-info {
-            padding: 20px;
-            text-align: center;
-        }
-        #sidebar .discord-info p {
-            font-size: 1rem;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
-            background: #333;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .tab:hover {
-            background: #ff4d4d;
-        }
-        .tab.active {
-            background: #b30000;
-        }
-
-        /* Tab Sections */
-        .section {
-            display: none;
-            padding: 20px;
-            background: #2b2b2b;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .section.active {
-            display: block;
-        }
-
-        /* Script Section */
-        .script-card {
-            background: #333;
-            margin: 10px;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        .script-card h3 {
-            margin-bottom: 10px;
-        }
-        .copy-btn {
-            background: #ff4d4d;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .copy-btn:hover {
-            background: #b30000;
-        }
-
-        /* Premium Section */
-        .premium-section {
-            background: linear-gradient(135deg, #ff4d4d, #b30000);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .premium-btn {
-            background: #333;
-            color: #ff4d4d;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Key Links Section */
-        .key-links {
-            display: none;
-            background: #333;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .key-links.active {
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GentleHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0e0e0e;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    /* Welcome Screen */
+    #welcomeScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: #0e0e0e;
+      color: #ff4d4d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+    #welcomeScreen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    #welcomeScreen h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+    #welcomeScreen p {
+      font-size: 20px;
+      color: #ccc;
+    }
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      padding: 30px 40px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      width: 100%;
+    }
+    .header img {
+      height: 100px;
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      color: #ff4d4d;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: 18px;
+      color: #ccc;
+    }
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 100%;
+      background: #1a1a1a;
+      padding: 30px;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+      transition: left 0.5s ease;
+    }
+    .sidebar.open {
+      left: 0;
+    }
+    .sidebar h3 {
+      color: #ff4d4d;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .sidebar p {
+      font-size: 16px;
+      color: #bbb;
+      margin: 5px 0;
+    }
+    .discord-btn {
+      background: #ff4d4d;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+    .discord-btn:hover {
+      background: #ff1a1a;
+    }
+    .close-sidebar {
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .main-content {
+      margin-left: 0;
+      padding: 40px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: #1a1a1a;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 6px;
+    }
+    .tabs button {
+      background: #2a2a2a;
+      color: #fff;
+      padding: 12px 24px;
+      border: 2px solid #ff4d4d;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+    .tabs button:hover {
+      background: #ff4d4d;
+      border-color: #fff;
+    }
+    .script-section {
+      max-width: 1200px;
+      width: 100%;
+      margin-top: 40px;
+      padding: 20px;
+      background: #1c1c1c;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    }
+    .script-category {
+      margin-bottom: 30px;
+    }
+    .script-category h2 {
+      font-size: 26px;
+      color: #ff4d4d;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+    }
+    .script-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .script-item {
+      background: #222;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      transition: 0.3s ease;
+    }
+    .script-item:hover {
+      border-color: #ff4d4d;
+      box-shadow: 0 5px 15px rgba(255, 77, 77, 0.7);
+    }
+    .script-title {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .copy-btn {
+      background: #ff4d4d;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .copy-btn:hover {
+      background: #ff1a1a;
+    }
+    .premium-section {
+      max-width: 1200px;
+      width: 100%;
+      padding: 40px 20px;
+      background: linear-gradient(145deg, #2a0000, #1a0000);
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 40px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+    }
+    .premium-section h2 {
+      font-size: 36px;
+      color: #ff4d4d;
+      margin-bottom: 20px;
+    }
+    .premium-section p {
+      font-size: 18px;
+      color: #ccc;
+      margin: 20px 0;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .premium-section button {
+      font-size: 18px;
+      background: #ff4d4d;
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .premium-section button:hover {
+      background: #ff1a1a;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Welcome Screen -->
-    <div id="welcome">Welcome to GentleHub!</div>
+  <!-- Welcome Screen -->
+  <div id="welcomeScreen">
+    <h1>Welcome to GentleHub</h1>
+    <p>Loading Page...</p>
+  </div>
 
-    <!-- Header -->
-    <header>
-        <div>
-            <h1>GentleHub Script Hub</h1>
-            <p>Your one-stop destination for premium Roblox scripts!</p>
-        </div>
-    </header>
-
-    <!-- Sidebar -->
-    <div id="sidebar">
-        <span class="close-btn" onclick="toggleSidebar()">×</span>
-        <div class="discord-info">
-            <p>Join our Discord community!</p>
-            <p>Members: 1,234</p>
-            <a href="https://discord.gg/example" target="_blank"><button>Join Discord</button></a>
-        </div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="discordSidebar">
+    <button class="close-sidebar" onclick="toggleSidebar()">×</button>
+    <h3>GentleHub</h3>
+    <p><strong>Active Members:</strong> <span id="activeMembers">Loading...</span></p>
+    <p><strong>Inactive Members:</strong> 456</p>
+    <a href="https://discord.com/invite/RKhKPBdVJw" class="discord-btn" target="_blank">Join Discord</a>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <div class="header">
+      <img src="https://i.imgur.com/hanj20Z.png" alt="GentleHub Logo">
+      <h1>GentleHub Script Hub</h1>
+      <p>Your destination for Roblox scripts — Fast, Free, and Powerful</p>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs">
-        <div class="tab active" onclick="switchTab('scripts')">Scripts</div>
-        <div class="tab" onclick="switchTab('premium')">Premium</div>
-        <div class="tab" onclick="switchTab('key-links')">Key Links</div>
+      <button onclick="scrollToSection('scripts')">Scripts</button>
+      <button onclick="scrollToSection('premium')">Premium</button>
+      <button onclick="showCategory('key')">Key Links</button>
     </div>
 
-    <!-- Tabs Sections -->
-    <div id="scripts" class="section active">
-        <input type="text" id="searchBar" placeholder="Search Scripts" onkeyup="filterScripts()">
-        <div id="scripts-list">
-            <!-- Script Cards -->
-            <div class="script-card">
-                <h3>Awesome Script 1</h3>
-                <button class="copy-btn" onclick="copyToClipboard('Awesome Script 1 Code')">Copy Script</button>
-            </div>
-            <div class="script-card">
-                <h3>Awesome Script 2</h3>
-                <button class="copy-btn" onclick="copyToClipboard('Awesome Script 2 Code')">Copy Script</button>
-            </div>
+    <div class="script-section" id="scripts">
+      <div class="script-section" id="key" style="display: none;">
+        <h2>Key Links</h2>
+        <div class="script-list">
+          <div class="script-item">
+            <div class="script-title">Key Site</div>
+            <a href="https://linkvertise.com" target="_blank" class="copy-btn">Visit</a>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Backup Key</div>
+            <a href="https://backup-link.com" target="_blank" class="copy-btn">Visit</a>
+          </div>
+          <div class="script-item">
+            <div class="script-title">Unlock Instructions</div>
+            <a href="https://gentlehub.com/unlock" target="_blank" class="copy-btn">View</a>
+          </div>
         </div>
-    </div>
-
-    <div id="premium" class="section">
-        <div class="premium-section">
-            <h2>Premium Scripts</h2>
-            <p>Unlock exclusive scripts and get priority access!</p>
-            <button class="premium-btn">Get Premium Access</button>
+      </div>
+      
+      
+      <div style="margin-bottom: 30px; text-align: center;">
+        <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Search for a script..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 6px; border: 1px solid #333; background-color: #1a1a1a; color: white;">
+      </div> 
+      
+      <div class="script-category">
+        <h2>Featured Scripts</h2>
+        <div class="script-list">
+          <div class="script-item"><div class="script-title">Arise Crossover</div><button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">PETS GO</div><button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Grow a Garden</div><button class="copy-btn" onclick="copyScript('Grow')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Robot Evolution</div><button class="copy-btn" onclick="copyScript('Robot')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">+1 Slayer Blade</div><button class="copy-btn" onclick="copyScript('Slayer')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Paint 'em'</div><button class="copy-btn" onclick="copyScript('Paint')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Bioblades RPG</div><button class="copy-btn" onclick="copyScript('Bioblades')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Skateboard Obby</div><button class="copy-btn" onclick="copyScript('Skateboard')">Copy Script</button></div>
+          <div class="script-item"><div class="script-title">Flying Wings Race Sim</div><button class="copy-btn" onclick="copyScript('Flying')">Copy Script</button></div>
         </div>
+        <div class="script-category" id="key" style="display: none;">
+          <h2 style="margin-top: 0;">🔑 Key Links</h2>
+
+          <div class="script-item">
+            <div class="script-title">Main Key System</div>
+            <div class="script-description">Use this to generate your access key.</div>
+            <a class="script-button" href="https://your-key-system-link.com" target="_blank">Get Key</a>
+          </div>
+        
+          <div class="script-item">
+            <div class="script-title">Backup Key Site</div>
+            <div class="script-description">If the main one is down, use this one.</div>
+            <a class="script-button" href="https://backup-key-link.com" target="_blank">Visit Backup</a>
+          </div>
+        </div>        
+      </div>
     </div>
 
-    <div id="key-links" class="section key-links">
-        <div class="key-link-card">
-            <h3>Key Access Site</h3>
-            <p>Access exclusive resources and tools.</p>
-            <a href="https://example.com" target="_blank"><button>Visit</button></a>
-        </div>
+    <div class="premium-section" id="premium">
+      <h2>Upgrade to Premium</h2>
+      <p>Unlock exclusive features and premium scripts only available to members. Get your edge today!</p>
+      <button onclick="window.open('https://payhip.com/Alezepremium', '_blank')">Join Premium</button>
     </div>
+  </div>
 
-    <script>
-        // Sidebar toggle function
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
+  <script>
 
-        // Switch between tabs
-        function switchTab(tabId) {
-            const tabs = document.querySelectorAll('.tab');
-            const sections = document.querySelectorAll('.section');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.querySelector(`.tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
-        }
+    // Toggle sidebar visibility and slide content
+    function toggleSidebar() {
+      const sidebar = document.getElementById("discordSidebar");
+      const mainContent = document.getElementById("mainContent");
+      sidebar.classList.toggle("open");
+      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
+    }
 
-        // Copy script to clipboard
-        function copyToClipboard(script) {
-            navigator.clipboard.writeText(script);
-            alert('Script copied to clipboard!');
-        }
+    function scrollToSection(section) {
+      const element = document.getElementById(section);
+      window.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth'
+      });
+    }
 
-        // Filter scripts based on search bar input
-        function filterScripts() {
-            const filter = document.getElementById('searchBar').value.toUpperCase();
-            const scripts = document.querySelectorAll('.script-card');
-            scripts.forEach(script => {
-                const title = script.querySelector('h3').innerText.toUpperCase();
-                if (title.indexOf(filter) > -1) {
-                    script.style.display = "";
-                } else {
-                    script.style.display = "none";
-                }
-           
+    // Simulate active members count (replace with actual data)
+    setTimeout(() => {
+      document.getElementById('activeMembers').textContent = '123';
+    }, 2000);
+
+
+    // Welcome Screen Delay
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("welcomeScreen").classList.add("hidden");
+      }, 2000);
+    });
+
+    // Sidebar Toggle
+    function toggleSidebar() {
+      document.getElementById("discordSidebar").classList.toggle("open");
+    }
+
+    // Scroll to Section
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      if (id !== 'key') document.getElementById("key").style.display = 'none';
+    }
+
+    // Show Category (Key Links)
+    function showCategory(id) {
+      const section = document.getElementById(id);
+      section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
+    }
+
+    // Copy Script Function
+    function copyScript(scriptContent) {
+      navigator.clipboard.writeText(scriptContent).then(() => {
+        alert("Script copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy script.");
+        console.error(err);
+      });
+    }
+
+    function filterScripts() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const items = document.querySelectorAll(".script-item");
+
+    items.forEach(item => {
+      const title = item.querySelector(".script-title").textContent.toLowerCase();
+      item.style.display = title.includes(input) ? "" : "none";
+    });
+  }
+  </script>
+</body>
+</html>
