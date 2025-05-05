@@ -338,48 +338,72 @@
   </div>
 
   <script>
-    window.onload = () => {
+
+    // Toggle sidebar visibility and slide content
+    function toggleSidebar() {
+      const sidebar = document.getElementById("discordSidebar");
+      const mainContent = document.getElementById("mainContent");
+      sidebar.classList.toggle("open");
+      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
+    }
+
+    function scrollToSection(section) {
+      const element = document.getElementById(section);
+      window.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth'
+      });
+    }
+
+    // Simulate active members count (replace with actual data)
+    setTimeout(() => {
+      document.getElementById('activeMembers').textContent = '123';
+    }, 2000);
+
+
+    // Welcome Screen Delay
+    window.addEventListener("load", () => {
       setTimeout(() => {
-        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById("welcomeScreen").classList.add("hidden");
       }, 2000);
-    };
-  
+    });
+
+    // Sidebar Toggle
     function toggleSidebar() {
       document.getElementById("discordSidebar").classList.toggle("open");
     }
-  
+
+    // Scroll to Section
     function scrollToSection(id) {
-      const section = document.getElementById(id);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-      }
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      if (id !== 'key') document.getElementById("key").style.display = 'none';
     }
-  
+
+    // Show Category (Key Links)
     function showCategory(id) {
-      const categories = document.querySelectorAll('.script-section > div');
-      categories.forEach(cat => cat.style.display = 'none');
-      document.getElementById(id).style.display = 'block';
+      const section = document.getElementById(id);
+      section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
     }
-  
-    function copyScript(name) {
-      const scripts = {
-        "Arise": "loadstring(game:HttpGet('https://example.com/arise.lua'))()",
-        // Add other script keys and URLs here
-      };
-      if (scripts[name]) {
-        navigator.clipboard.writeText(scripts[name]);
-        alert(`${name} script copied to clipboard!`);
-      }
-    }
-  
-    function filterScripts() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const items = document.querySelectorAll('.script-item');
-      items.forEach(item => {
-        const title = item.querySelector('.script-title').textContent.toLowerCase();
-        item.style.display = title.includes(input) ? '' : 'none';
+
+    // Copy Script Function
+    function copyScript(scriptContent) {
+      navigator.clipboard.writeText(scriptContent).then(() => {
+        alert("Script copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy script.");
+        console.error(err);
       });
     }
-  </script>  
+
+    function filterScripts() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const items = document.querySelectorAll(".script-item");
+
+    items.forEach(item => {
+      const title = item.querySelector(".script-title").textContent.toLowerCase();
+      item.style.display = title.includes(input) ? "" : "none";
+    });
+  }
+  </script>
 </body>
 </html>
