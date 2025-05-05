@@ -381,25 +381,35 @@ function showCategory(id) {
     scrollToSection(id);
   }
 
-    // Copy Script Function
-    function copyScript(scriptContent) {
-      navigator.clipboard.writeText(scriptContent).then(() => {
-        alert("Script copied to clipboard!");
-      }).catch(err => {
-        alert("Failed to copy script.");
-        console.error(err);
-      });
+    // Simulated copy script function
+    function copyScript(scriptName) {
+      const scripts = {
+        Arise: 'print("Arise script loaded")',
+        PetsGo: 'print("PetsGo script loaded")',
+        Grow: 'print("Grow a Garden script loaded")',
+        Robot: 'print("Robot Evolution script loaded")',
+        Slayer: 'print("+1 Slayer Blade script loaded")',
+        Paint: 'print("Paint \'em\' script loaded")',
+      };
+  
+      if (scripts[scriptName]) {
+        navigator.clipboard.writeText(scripts[scriptName]).then(() => {
+          alert(Copied ${scriptName} script to clipboard!);
+        });
+      }
     }
-
-  function filterScripts() {
+  
+    function filterScripts() {
     const input = document.getElementById("searchInput").value.toLowerCase();
-    const scripts = document.querySelectorAll(".script-item");
-    
-    scripts.forEach(script => {
-      const title = script.querySelector(".script-title").textContent.toLowerCase();
-      script.style.display = title.includes(input) ? "block" : "none";
+    const items = document.querySelectorAll(".script-item");
+
+    items.forEach(item => {
+      const title = item.querySelector(".script-title").textContent.toLowerCase();
+      item.style.display = title.includes(input) ? "" : "none";
     });
   }
+
+
     window.addEventListener('load', () => {
     setTimeout(() => {
       document.getElementById('welcomeScreen').classList.add('hidden');
