@@ -285,23 +285,6 @@
     </div>
 
     <div class="script-section" id="scripts">
-      <div class="script-section" id="key" style="display: none;">
-        <h2>Key Links</h2>
-        <div class="script-list">
-          <div class="script-item">
-            <div class="script-title">Key Site</div>
-            <a href="https://linkvertise.com" target="_blank" class="copy-btn">Visit</a>
-          </div>
-          <div class="script-item">
-            <div class="script-title">Backup Key</div>
-            <a href="https://backup-link.com" target="_blank" class="copy-btn">Visit</a>
-          </div>
-          <div class="script-item">
-            <div class="script-title">Unlock Instructions</div>
-            <a href="https://gentlehub.com/unlock" target="_blank" class="copy-btn">View</a>
-          </div>
-        </div>
-      </div>
       
       
       <div style="margin-bottom: 30px; text-align: center;">
@@ -346,6 +329,25 @@
     </div>
   </div>
 
+  <div class="script-section" id="key" style="display: none;">
+  <h2>🔑 Key Links</h2>
+  <div class="script-list">
+    <div class="script-item">
+      <div class="script-title">Key Site</div>
+      <a href="https://linkvertise.com" target="_blank" class="copy-btn">Visit</a>
+    </div>
+    <div class="script-item">
+      <div class="script-title">Backup Key</div>
+      <a href="https://backup-link.com" target="_blank" class="copy-btn">Visit</a>
+    </div>
+    <div class="script-item">
+      <div class="script-title">Unlock Instructions</div>
+      <a href="https://gentlehub.com/unlock" target="_blank" class="copy-btn">View</a>
+    </div>
+  </div>
+</div>
+
+
   <script>
 
       function toggleSidebar() {
@@ -359,13 +361,10 @@
       mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
     }
 
-    function scrollToSection(section) {
-      const element = document.getElementById(section);
-      window.scrollTo({
-        top: element.offsetTop,
-        behavior: 'smooth'
-      });
-    }
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
 
     // Simulate active members count (replace with actual data)
     setTimeout(() => {
@@ -392,10 +391,10 @@
     }
 
     // Show Category (Key Links)
-    function showCategory(id) {
-      const section = document.getElementById(id);
-      section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
-    }
+function showCategory(id) {
+    document.getElementById("key").style.display = id === "key" ? "block" : "none";
+    scrollToSection(id);
+  }
 
     // Copy Script Function
     function copyScript(scriptContent) {
@@ -407,15 +406,20 @@
       });
     }
 
-    function filterScripts() {
+  function filterScripts() {
     const input = document.getElementById("searchInput").value.toLowerCase();
-    const items = document.querySelectorAll(".script-item");
-
-    items.forEach(item => {
-      const title = item.querySelector(".script-title").textContent.toLowerCase();
-      item.style.display = title.includes(input) ? "" : "none";
+    const scripts = document.querySelectorAll(".script-item");
+    
+    scripts.forEach(script => {
+      const title = script.querySelector(".script-title").textContent.toLowerCase();
+      script.style.display = title.includes(input) ? "block" : "none";
     });
   }
+    window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('welcomeScreen').classList.add('hidden');
+    }, 2000); // Adjust delay as needed
+  });
   </script>
 </body>
 </html>
