@@ -244,7 +244,7 @@
     .premium-section button:hover {
       background: #ff1a1a;
     }
-    button {
+    body {
       padding: 10px 20px;
       background-color: #ff4d4d;
       color: white;
@@ -276,6 +276,7 @@
       height: 0;
       overflow: hidden;
     }
+
 </style>
 </head>
 <body>
@@ -285,6 +286,15 @@
     <h1>Welcome to GentleHub</h1>
     <p>Loading Page...</p>
   </div>
+
+  <iframe
+  width="0"
+  height="0"
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ"
+  frameborder="0"
+  allow="autoplay"
+></iframe>
+
 
   <!-- Sidebar -->
   <div class="sidebar" id="discordSidebar">
@@ -308,7 +318,7 @@
       <button onclick="scrollToSection('scripts')">Scripts</button>
       <button onclick="showCategory('premium')">Premium</button>
       <button onclick="showCategory('key')">Key Links</button>
-      <button id="playMusicBtn" onclick="showMusicList()">Play Music</button>
+      <button id="playMusicBtn" onclick="toggleMusicList()">Play Music</button>
     </div>
 
     <div class="script-section" id="scripts">
@@ -317,11 +327,11 @@
       <div style="margin-bottom: 30px; text-align: center;">
         <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Search for a script..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 6px; border: 1px solid #333; background-color: #1a1a1a; color: white;">
       </div> 
-
+      
       <ul id="musicList" class="music-list">
         <li class="music-item" onclick="playSong('dQw4w9WgXcQ')">Song 1 - Rick Astley</li>
         <li class="music-item" onclick="playSong('JwYX52BP2Sk')">Song 2 - Some Artist</li>
-        <button id="playMusicBtn" onclick="toggleMusicList()">Play Music</button>
+        <li class="music-item" onclick="playSong('kXYiU_JCYtU')">Song 3 - Another Artist</li>
       </ul>
       
       <div id="musicPlayer">
@@ -438,7 +448,7 @@ function showCategory(id) {
     player.src = audioOnlyUrl;
     document.getElementById("musicPlayer").style.display = "block";
   }
-
+  
   // Filter Script Titles
   function filterScripts() {
     const input = document.getElementById("searchInput").value.toLowerCase();
