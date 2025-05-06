@@ -244,10 +244,8 @@
     .premium-section button:hover {
       background: #ff1a1a;
     }
-
     button {
-      padding: 10px;
-      margin: 10px;
+      padding: 10px 20px;
       background-color: #ff4d4d;
       color: white;
       border: none;
@@ -260,56 +258,24 @@
     .music-list {
       display: none;
       margin-top: 20px;
-      list-style-type: none;
+      list-style: none;
       padding: 0;
     }
     .music-item {
       background-color: #333;
       padding: 10px;
-      margin: 5px;
-      cursor: pointer;
+      margin: 5px 0;
       border-radius: 6px;
+      cursor: pointer;
     }
     .music-item:hover {
       background-color: #444;
     }
-
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1a1a1a;
-      color: white;
-      margin: 0;
-      padding: 20px;
-    }
-    button {
-      padding: 10px;
-      margin: 10px;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #ff1a1a;
-    }
-    .music-list {
+    #musicPlayer {
       display: none;
-      margin-top: 20px;
-      list-style-type: none;
-      padding: 0;
+      height: 0;
+      overflow: hidden;
     }
-    .music-item {
-      background-color: #333;
-      padding: 10px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 6px;
-    }
-    .music-item:hover {
-      background-color: #444;
-    }
-
 </style>
 </head>
 <body>
@@ -352,16 +318,14 @@
         <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Search for a script..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 6px; border: 1px solid #333; background-color: #1a1a1a; color: white;">
       </div> 
 
-      <div id="musicListContainer">
-        <ul id="musicList" class="music-list">
-          <li class="music-item" onclick="playSong('dQw4w9WgXcQ')">Song 1 - Rick Astley</li>
-          <li class="music-item" onclick="playSong('JwYX52BP2Sk')">Song 2 - Some Artist</li>
-          <li class="music-item" onclick="playSong('kXYiU_JCYtU')">Song 3 - Another Artist</li>
-        </ul>
-      </div>
+      <ul id="musicList" class="music-list">
+        <li class="music-item" onclick="playSong('dQw4w9WgXcQ')">Song 1 - Rick Astley</li>
+        <li class="music-item" onclick="playSong('JwYX52BP2Sk')">Song 2 - Some Artist</li>
+        <button id="playMusicBtn" onclick="toggleMusicList()">Play Music</button>
+      </ul>
       
-      <div id="musicPlayer" style="display: none; margin-top: 20px;">
-        <iframe id="ytplayer" width="560" height="315" src="" frameborder="0" allow="autoplay"></iframe>
+      <div id="musicPlayer">
+        <iframe id="ytplayer" src="" allow="autoplay" style="width:0;height:0;border:0;"></iframe>
       </div>
 
       <div class="script-category">
@@ -461,19 +425,18 @@ function showCategory(id) {
     });
   }
 
-function showMusicList() {
-    document.getElementById('musicList').style.display = 'block';
-    document.getElementById('playMusicBtn').style.display = 'none'; // Hide the Play button
+  let musicListVisible = false;
+
+  function toggleMusicList() {
+    musicListVisible = !musicListVisible;
+    document.getElementById("musicList").style.display = musicListVisible ? "block" : "none";
   }
 
-  // Function to play the selected song
   function playSong(videoId) {
-    const player = document.getElementById('ytplayer');
-    const iframe = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
-
-    // Set the iframe src to the selected song and show the player
-    player.src = iframe;
-    document.getElementById('musicPlayer').style.display = 'block';
+    const player = document.getElementById("ytplayer");
+    const audioOnlyUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
+    player.src = audioOnlyUrl;
+    document.getElementById("musicPlayer").style.display = "block";
   }
 
   // Filter Script Titles
