@@ -322,15 +322,24 @@
       </div> 
       
       <ul id="musicList" class="music-list">
-        <li class="music-item" onclick="playSong('dQw4w9WgXcQ')">Song 1 - Rick Astley</li>
-        <li class="music-item" onclick="playSong('JwYX52BP2Sk')">Song 2 - Some Artist</li>
-        <li class="music-item" onclick="playSong('kXYiU_JCYtU')">Song 3 - Another Artist</li>
+        <li class="music-item">
+          <span class="music-label">Song 1 - Rick Astley</span>
+          <button onclick="playOrStopSong(this, 'dQw4w9WgXcQ')">Play</button>
+        </li>
+        <li class="music-item">
+          <span class="music-label">Song 2 - Some Artist</span>
+          <button onclick="playOrStopSong(this, 'JwYX52BP2Sk')">Play</button>
+        </li>
+        <li class="music-item">
+          <span class="music-label">Song 3 - Another Artist</span>
+          <button onclick="playOrStopSong(this, 'kXYiU_JCYtU')">Play</button>
+        </li>
       </ul>
       
       <div id="musicPlayer">
         <iframe id="ytplayer" src="" allow="autoplay" style="width:0;height:0;border:0;"></iframe>
       </div>
-
+  
       <div class="script-category">
         <h2>Featured Scripts</h2>
         <div class="script-list">
@@ -429,17 +438,37 @@ function showCategory(id) {
   }
 
   let musicListVisible = false;
+  let currentSongId = null;
+  let currentButton = null;
 
   function toggleMusicList() {
     musicListVisible = !musicListVisible;
     document.getElementById("musicList").style.display = musicListVisible ? "block" : "none";
   }
 
-  function playSong(videoId) {
+  function playOrStopSong(button, videoId) {
     const player = document.getElementById("ytplayer");
-    const audioOnlyUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
-    player.src = audioOnlyUrl;
-    document.getElementById("musicPlayer").style.display = "block";
+
+    // If same song is clicked again, stop playback
+    if (currentSongId === videoId) {
+      player.src = "";
+      currentSongId = null;
+      button.textContent = "Play";
+      document.getElementById("musicPlayer").style.display = "none";
+      currentButton = null;
+    } else {
+      // Stop previously playing song
+      if (currentButton) {
+        currentButton.textContent = "Play";
+      }
+
+      const audioOnlyUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
+      player.src = audioOnlyUrl;
+      currentSongId = videoId;
+      document.getElementById("musicPlayer").style.display = "block";
+      button.textContent = "Stop";
+      currentButton = button;
+    }
   }
 
   // Filter Script Titles
