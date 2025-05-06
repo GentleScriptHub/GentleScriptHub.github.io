@@ -286,6 +286,7 @@
       <button onclick="scrollToSection('scripts')">Scripts</button>
       <button onclick="showCategory('premium')">Premium</button>
       <button onclick="showCategory('key')">Key Links</button>
+      <button onclick="playMusic()">Play Music</button>
     </div>
 
     <div class="script-section" id="scripts">
@@ -295,6 +296,17 @@
         <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Search for a script..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 6px; border: 1px solid #333; background-color: #1a1a1a; color: white;">
       </div> 
       
+      <div id="musicPlayer" style="display: none;">
+        <iframe
+          id="ytplayer"
+          width="0"
+          height="0"
+          src=""
+          frameborder="0"
+          allow="autoplay"
+        ></iframe>
+      </div>
+
       <div class="script-category">
         <h2>Featured Scripts</h2>
         <div class="script-list">
@@ -390,6 +402,11 @@ function showCategory(id) {
       alert("Failed to copy script.");
       console.error(err);
     });
+  }
+
+  function playMusic() {
+    document.getElementById('ytplayer').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ";
+    document.getElementById('musicPlayer').style.display = "block";
   }
 
   // Filter Script Titles
