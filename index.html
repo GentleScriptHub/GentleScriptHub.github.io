@@ -70,6 +70,10 @@
       font-size: 18px;
       color: #ccc;
     }
+    .header img {
+   max-width: 100%;
+   height: auto;
+}
     /* Sidebar */
     .sidebar {
       position: fixed;
@@ -270,8 +274,8 @@
       overflow: hidden;
     }
 
-    /* Mobile adjustments */
-    @media (max-width: 768px) {
+     /* Mobile adjustments */
+     @media (max-width: 768px) {
       .tabs button {
         font-size: 14px;
         padding: 10px 18px;
@@ -291,7 +295,22 @@
       .header p {
         font-size: 14px;
       }
+      /* Sidebar */
+      .sidebar {
+        left: -100%;
+        padding: 20px;
+      }
+      .sidebar.open {
+        left: 0;
+      }
+      .main-content {
+        padding: 20px;
+      }
+      .script-list {
+        grid-template-columns: 1fr;
+      }
     }
+
 </style>
 </head>
 <body>
@@ -330,6 +349,7 @@
     </div>
 
     <div class="tabs">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
       <button onclick="scrollToSection('scripts')">Scripts</button>
       <button onclick="showCategory('premium')">Premium</button>
       <button onclick="showCategory('key')">Key Links</button>
@@ -401,6 +421,10 @@
       </div>
       
   <script>
+
+function toggleSidebar() {
+   document.querySelector('.sidebar').classList.toggle('open');
+}
 
       function toggleSidebar() {
     document.getElementById("discordSidebar").classList.toggle("open");
