@@ -20,14 +20,6 @@ header {
   padding: 30px 15px;
 }
 
-header h1 {
-  font-size: 2rem;
-}
-
-header p {
-  font-size: 1rem;
-}
-
 .container {
   max-width: 1100px;
   margin: auto;
@@ -48,7 +40,7 @@ header p {
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-input, button {
+input, button, textarea {
   padding: 12px;
   width: 100%;
   margin-top: 10px;
@@ -67,22 +59,40 @@ button:hover {
   background: #444;
 }
 
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.stars span {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.comment-box {
+  margin-top: 10px;
+}
+
+.comment {
+  background: #eee;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
 footer {
   text-align: center;
   padding: 15px;
   font-size: 0.9rem;
 }
 
-/* TABLET */
 @media (min-width: 600px) {
-  header h1 { font-size: 2.5rem; }
-  .grid { grid-template-columns: 1fr 1fr; }
-}
-
-/* DESKTOP */
-@media (min-width: 900px) {
-  header h1 { font-size: 3rem; }
-  header p { font-size: 1.2rem; }
   .grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -100,7 +110,7 @@ footer {
 
     <div class="card">
       <h2>About Me</h2>
-      <p>I help people build strength, lose fat, and feel confident. Whether you're a beginner or experienced, I got you.</p>
+      <p>I help people build strength, lose fat, and feel confident.</p>
     </div>
 
     <div class="card">
@@ -113,18 +123,66 @@ footer {
 
         <input type="hidden" name="_subject" value="New Booking Request!">
         <input type="hidden" name="_captcha" value="false">
-        <!-- Removed redirect to avoid 404 issues -->
 
         <button type="submit">Book Now</button>
       </form>
+    </div>
+
+    <div class="card">
+      <h2>My Training</h2>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" />
+        <img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1" />
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438" />
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Reviews ⭐</h2>
+
+      <div class="stars" id="stars">
+        <span onclick="rate(1)">⭐</span>
+        <span onclick="rate(2)">⭐</span>
+        <span onclick="rate(3)">⭐</span>
+        <span onclick="rate(4)">⭐</span>
+        <span onclick="rate(5)">⭐</span>
+      </div>
+
+      <textarea id="commentInput" placeholder="Leave a comment..."></textarea>
+      <button onclick="addComment()">Post</button>
+
+      <div id="comments"></div>
     </div>
 
   </div>
 </div>
 
 <footer>
-  © 2026 Train With Me | Built for your fitness journey
+  © 2026 Train With Me
 </footer>
+
+<script>
+let rating = 0;
+
+function rate(num) {
+  rating = num;
+  alert("You rated " + num + " stars");
+}
+
+function addComment() {
+  const input = document.getElementById("commentInput");
+  const comments = document.getElementById("comments");
+
+  if(input.value === "") return;
+
+  const div = document.createElement("div");
+  div.className = "comment";
+  div.innerText = "⭐".repeat(rating) + " - " + input.value;
+
+  comments.prepend(div);
+  input.value = "";
+}
+</script>
 
 </body>
 </html>
