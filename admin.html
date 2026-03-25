@@ -6,65 +6,20 @@
 <title>Trainer Dashboard</title>
 
 <style>
-body{
-  font-family: Arial;
-  margin:0;
-  background:#0f172a;
-  color:white;
-}
+body{font-family:sans-serif;background:#0f172a;color:white;margin:0}
+.container{display:flex;flex-wrap:wrap}
+.users{width:25%;padding:10px}
+.chat{width:40%;padding:10px}
+.appointments{width:35%;padding:10px}
 
-header{
-  padding:20px;
-  text-align:center;
-  border-bottom:1px solid #1f2937;
-}
+.user{padding:10px;background:#1f2937;margin:5px;border-radius:10px;cursor:pointer}
+.user:hover{background:#374151}
 
-.container{
-  display:grid;
-  grid-template-columns: 1fr;
-  gap:20px;
-  padding:20px;
-}
+.msg{margin:5px;padding:8px;border-radius:10px}
+.me{background:#22c55e;color:black;text-align:right}
+.them{background:#1f2937}
 
-.section{
-  background:#111827;
-  padding:15px;
-  border-radius:15px;
-}
-
-.users div{
-  padding:10px;
-  margin:5px 0;
-  background:#1f2937;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.users div:hover{
-  background:#374151;
-}
-
-.chat-box{
-  max-height:250px;
-  overflow-y:auto;
-  margin-bottom:10px;
-}
-
-.msg{
-  padding:8px;
-  margin:5px;
-  border-radius:10px;
-}
-
-.me{
-  background:#22c55e;
-  color:black;
-  text-align:right;
-}
-
-.them{
-  background:#1f2937;
-}
+.card{background:#1f2937;padding:10px;margin-top:10px;border-radius:10px}
 
 input,button{
   width:100%;
@@ -74,46 +29,37 @@ input,button{
   border-radius:10px;
 }
 
-button{
-  background:#22c55e;
-  color:black;
-  font-weight:bold;
-}
+button{background:#22c55e;color:black;font-weight:bold}
 
-/* DESKTOP */
-@media(min-width:900px){
-  .container{
-    grid-template-columns: 1fr 2fr 1fr;
-  }
+@media(max-width:900px){
+  .users,.chat,.appointments{width:100%}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>💪 Trainer Dashboard</h1>
-</header>
+<h2 style="text-align:center;">💪 Trainer Dashboard</h2>
 
 <div class="container">
 
-<!-- CLIENT LIST -->
-<div class="section">
-  <h2>👥 Clients</h2>
-  <div id="users" class="users"></div>
+<!-- USERS -->
+<div class="users">
+  <h3>Clients</h3>
+  <div id="users"></div>
 </div>
 
 <!-- CHAT -->
-<div class="section">
-  <h2>💬 Chat</h2>
-  <div id="chatBox" class="chat-box"></div>
+<div class="chat">
+  <h3>Chat</h3>
+  <div id="chatBox"></div>
   <input id="reply" placeholder="Reply...">
-  <button onclick="send()">Send</button>
+  <button onclick="sendChat()">Send</button>
 </div>
 
-<!-- BOOKINGS -->
-<div class="section">
-  <h2>📅 Appointments</h2>
+<!-- APPOINTMENTS -->
+<div class="appointments">
+  <h3>Appointments</h3>
   <div id="appointments"></div>
 </div>
 
@@ -124,18 +70,19 @@ let currentUser = null;
 
 // LOAD USERS
 function loadUsers(){
-  let list=document.getElementById('users');
-  list.innerHTML='';
+  let list = document.getElementById('users');
+  list.innerHTML = '';
 
   for(let key in localStorage){
     if(key.startsWith('chat_')){
-      let name=key.replace('chat_','');
+      let name = key.replace('chat_','');
 
-      let div=document.createElement('div');
-      div.innerText=name;
+      let div = document.createElement('div');
+      div.className = 'user';
+      div.innerText = name;
 
-      div.onclick=()=>{
-        currentUser=name;
+      div.onclick = () => {
+        currentUser = name;
         loadChat();
       };
 
@@ -146,63 +93,82 @@ function loadUsers(){
 
 // LOAD CHAT
 function loadChat(){
-  let box=document.getElementById('chatBox');
-  box.innerHTML='';
+  let box = document.getElementById('chatBox');
+  box.innerHTML = '';
 
-  let chat=JSON.parse(localStorage.getItem('chat_'+currentUser)||'[]');
+  let chat = JSON.parse(localStorage.getItem('chat_'+currentUser)||'[]');
 
   chat.forEach(m=>{
-    let div=document.createElement('div');
-    div.className='msg '+(m.from==='trainer'?'me':'them');
-    div.innerText=m.text;
+    let div = document.createElement('div');
+    div.className = 'msg ' + (m.from === 'trainer' ? 'me' : 'them');
+    div.innerText = m.text;
     box.appendChild(div);
   });
 }
 
-// SEND MESSAGE
-function send(){
-  let input=document.getElementById('reply');
+// SEND CHAT
+function sendChat(){
+  let input = document.getElementById('reply');
 
   if(!input.value || !currentUser){
     alert('Select a client');
     return;
   }
 
-  let chat=JSON.parse(localStorage.getItem('chat_'+currentUser)||'[]');
+  let chat = JSON.parse(localStorage.getItem('chat_'+currentUser)||'[]');
 
   chat.push({
     from:'trainer',
     text:input.value
   });
 
-  localStorage.setItem('chat_'+currentUser,JSON.stringify(chat));
+  localStorage.setItem('chat_'+currentUser, JSON.stringify(chat));
 
-  input.value='';
+  input.value = '';
   loadChat();
 }
 
-// LOAD BOOKINGS (SIMULATED)
+// LOAD APPOINTMENTS
 function loadAppointments(){
-  let box=document.getElementById('appointments');
-  box.innerHTML='';
+  let box = document.getElementById('appointments');
+  box.innerHTML = '';
 
-  let bookings=JSON.parse(localStorage.getItem('appointments')||'[]');
+  let bookings = JSON.parse(localStorage.getItem('appointments') || '[]');
 
-  bookings.forEach(b=>{
-    let div=document.createElement('div');
-    div.style.background='#1f2937';
-    div.style.padding='10px';
-    div.style.marginTop='10px';
-    div.style.borderRadius='10px';
+  bookings.forEach((b, index)=>{
+    let div = document.createElement('div');
+    div.className = 'card';
 
-    div.innerHTML=`
+    div.innerHTML = `
       <strong>${b.name}</strong><br>
-      ${b.date} at ${b.time}<br>
-      ${b.email}
+      📅 ${b.date} at ${b.time}<br>
+      📧 ${b.email}
+      <input id="reply_${index}" placeholder="Reply to this client">
+      <button onclick="replyToBooking(${index}, '${b.name}')">Reply</button>
     `;
 
     box.appendChild(div);
   });
+}
+
+// REPLY TO BOOKING → SENDS TO CHAT
+function replyToBooking(index, name){
+  let input = document.getElementById('reply_'+index);
+
+  if(!input.value) return;
+
+  let chat = JSON.parse(localStorage.getItem('chat_'+name)||'[]');
+
+  chat.push({
+    from:'trainer',
+    text:input.value
+  });
+
+  localStorage.setItem('chat_'+name, JSON.stringify(chat));
+
+  alert("Reply sent to " + name);
+
+  input.value = '';
 }
 
 // INIT
