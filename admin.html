@@ -81,10 +81,11 @@ function loadChat(){
     snapshot.forEach(doc=>{
       let m=doc.data();
 
+      // ✅ PRIVATE CHAT FILTER
       if(
-  (m.name === currentUser && m.to === "trainer") ||
-  (m.name === "trainer" && m.to === currentUser)
-){
+        (m.name===currentUser && m.to==="trainer") ||
+        (m.name==="trainer" && m.to===currentUser)
+      ){
         let div=document.createElement('div');
         div.className='msg '+(m.name==="trainer"?'me':'them');
         div.innerText=m.name+": "+m.text;
@@ -99,11 +100,12 @@ window.sendReply=async function(){
   let input=document.getElementById('reply');
   if(!input.value || !currentUser) return;
 
-await addDoc(collection(db,"messages"),{
-  name:"trainer",
-  text:input.value,
-  time:Date.now()
-});
+  await addDoc(collection(db,"messages"),{
+    name:"trainer",
+    to: currentUser,
+    text:input.value,
+    time:Date.now()
+  });
 
   input.value='';
 }
@@ -138,12 +140,12 @@ window.replyBooking=async function(name,i){
   let input=document.getElementById('reply_'+i);
   if(!input.value) return;
 
- await addDoc(collection(db,"messages"),{
-  name:"trainer",
-  to:name,
-  text:"(Booking Reply) " + input.value,
-  time:Date.now()
-});
+  await addDoc(collection(db,"messages"),{
+    name:"trainer",
+    to: name,
+    text:"(Booking Reply) "+input.value,
+    time:Date.now()
+  });
 
   alert("Reply sent to "+name);
   input.value='';
