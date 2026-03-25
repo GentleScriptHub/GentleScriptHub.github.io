@@ -80,7 +80,7 @@ header h1{font-size:2rem}
     <!-- BOOKING -->
     <div class="section">
       <h2>📅 Book Session</h2>
-      <form action="https://formsubmit.co/javonjoseph2004@gmail.com" method="POST" target="_blank">
+      <form action="https://formsubmit.co/javonjoseph2004@gmail.com" method="POST" target="_blank" onsubmit="saveBooking()">
         <input id="bookName" name="name" required>
         <input name="email" placeholder="Email" required>
         <input type="date" name="date" required>
@@ -193,6 +193,19 @@ box.appendChild(div);
 if(localStorage.getItem('user')){
 user=localStorage.getItem('user');
 start();
+}
+
+function saveBooking(){
+  let name = document.getElementById('bookName').value;
+  let email = document.querySelector('[name=email]').value;
+  let date = document.querySelector('[name=date]').value;
+  let time = document.querySelector('[name=time]').value;
+
+  let bookings = JSON.parse(localStorage.getItem('appointments') || '[]');
+
+  bookings.push({name,email,date,time});
+
+  localStorage.setItem('appointments', JSON.stringify(bookings));
 }
 </script>
 
