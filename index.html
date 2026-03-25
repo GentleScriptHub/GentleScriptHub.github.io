@@ -7,95 +7,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; }
-
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: linear-gradient(to right, #1e1e1e, #2c2c2c);
-  color: white;
-}
-
-header {
-  text-align: center;
-  padding: 30px 15px;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 15px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.card {
-  background: #fff;
-  color: #000;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-input, button, textarea {
-  padding: 12px;
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-}
-
-button {
-  background: black;
-  color: white;
-  font-weight: bold;
-}
-
-button:hover {
-  background: #444;
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
-}
-
-.gallery img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.stars span {
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.comment-box {
-  margin-top: 10px;
-}
-
-.comment {
-  background: #eee;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-footer {
-  text-align: center;
-  padding: 15px;
-  font-size: 0.9rem;
-}
-
-@media (min-width: 600px) {
-  .grid { grid-template-columns: 1fr 1fr; }
-}
-
+body { font-family: 'Poppins', sans-serif; margin: 0; background: linear-gradient(to right, #1e1e1e, #2c2c2c); color: white; }
+header { text-align: center; padding: 30px 15px; }
+.container { max-width: 1100px; margin: auto; padding: 15px; }
+.grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.card { background: #fff; color: #000; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+input, button, textarea { padding: 12px; width: 100%; margin-top: 10px; border-radius: 8px; border: none; font-size: 1rem; }
+button { background: black; color: white; font-weight: bold; }
+button:hover { background: #444; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.gallery img { width: 100%; border-radius: 10px; }
+.stars span { font-size: 1.5rem; cursor: pointer; }
+.comment { background: #eee; padding: 10px; border-radius: 10px; margin-top: 10px; }
+.user-bar { display:flex; gap:10px; align-items:center; }
+.user-bar span { font-weight: bold; }
+footer { text-align: center; padding: 15px; font-size: 0.9rem; }
+@media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
 </style>
 </head>
 <body>
@@ -108,22 +35,26 @@ footer {
 <div class="container">
   <div class="grid">
 
+    <!-- LOGIN -->
     <div class="card">
-      <h2>About Me</h2>
-      <p>I help people build strength, lose fat, and feel confident.</p>
+      <h2>Account</h2>
+      <div class="user-bar">
+        <input id="username" placeholder="Enter your name">
+        <button onclick="login()">Sign In</button>
+        <button onclick="logout()">Sign Out</button>
+      </div>
+      <p id="welcome"></p>
     </div>
 
     <div class="card">
       <h2>Book a Session</h2>
       <form action="https://formsubmit.co/javonjoseph2004@gmail.com" method="POST" target="_blank">
-        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="text" id="bookName" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
         <input type="date" name="date" required>
         <input type="time" name="time" required>
-
         <input type="hidden" name="_subject" value="New Booking Request!">
         <input type="hidden" name="_captcha" value="false">
-
         <button type="submit">Book Now</button>
       </form>
     </div>
@@ -140,7 +71,7 @@ footer {
     <div class="card">
       <h2>Reviews ⭐</h2>
 
-      <div class="stars" id="stars">
+      <div class="stars">
         <span onclick="rate(1)">⭐</span>
         <span onclick="rate(2)">⭐</span>
         <span onclick="rate(3)">⭐</span>
@@ -164,23 +95,70 @@ footer {
 <script>
 let rating = 0;
 
-function rate(num) {
-  rating = num;
-  alert("You rated " + num + " stars");
+// LOGIN SYSTEM
+function login() {
+  const name = document.getElementById("username").value;
+  if(!name) return alert("Enter your name");
+  localStorage.setItem("user", name);
+  document.getElementById("welcome").innerText = "Signed in as: " + name;
+  document.getElementById("bookName").value = name;
 }
 
+function logout() {
+  localStorage.removeItem("user");
+  document.getElementById("welcome").innerText = "Signed out";
+}
+
+// LOAD USER
+window.onload = function() {
+  const user = localStorage.getItem("user");
+  if(user) {
+    document.getElementById("welcome").innerText = "Signed in as: " + user;
+    document.getElementById("bookName").value = user;
+  }
+  loadComments();
+}
+
+// RATING
+function rate(num) {
+  rating = num;
+}
+
+// COMMENTS SAVE
 function addComment() {
   const input = document.getElementById("commentInput");
-  const comments = document.getElementById("comments");
-
+  const user = localStorage.getItem("user") || "Anonymous";
   if(input.value === "") return;
 
-  const div = document.createElement("div");
-  div.className = "comment";
-  div.innerText = "⭐".repeat(rating) + " - " + input.value;
+  const comment = {
+    name: user,
+    text: input.value,
+    stars: rating
+  };
 
-  comments.prepend(div);
+  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+  comments.unshift(comment);
+  localStorage.setItem("comments", JSON.stringify(comments));
+
   input.value = "";
+  displayComments();
+}
+
+function loadComments() {
+  displayComments();
+}
+
+function displayComments() {
+  const container = document.getElementById("comments");
+  container.innerHTML = "";
+  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+
+  comments.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "comment";
+    div.innerText = c.name + " - " + "⭐".repeat(c.stars) + "\n" + c.text;
+    container.appendChild(div);
+  });
 }
 </script>
 
