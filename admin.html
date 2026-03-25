@@ -4,67 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trainer Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{font-family:Poppins;background:#0f172a;color:white;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Poppins;background:#0f172a;color:#e5e7eb}
 
-header{
-  text-align:center;
-  padding:20px;
-  border-bottom:1px solid #1f2937;
-}
+header{padding:20px;text-align:center;border-bottom:1px solid #1f2937}
+header h1{font-size:2rem}
 
-.container{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:20px;
-  padding:20px;
-}
+.container{max-width:1200px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:1fr;gap:20px}
 
-.section{
-  background:#111827;
-  padding:15px;
-  border-radius:15px;
-}
+.section{background:#111827;padding:20px;border-radius:20px;box-shadow:0 5px 20px rgba(0,0,0,0.3)}
+.section h2{margin-bottom:10px}
 
-.users div{
-  padding:10px;
-  background:#1f2937;
-  margin:5px 0;
-  border-radius:10px;
-  cursor:pointer;
-}
+.users div{padding:10px;background:#1f2937;margin:5px 0;border-radius:10px;cursor:pointer}
+.users div:hover{background:#374151}
 
-.msg{
-  padding:8px;
-  margin:5px;
-  border-radius:10px;
-}
-
+.chat{max-height:300px;overflow:auto;background:#0b1220;padding:10px;border-radius:12px}
+.msg{padding:10px;margin:6px;border-radius:12px}
 .me{background:#22c55e;color:black;text-align:right}
 .them{background:#1f2937}
 
-.chat{max-height:250px;overflow:auto}
+.card{background:#1f2937;padding:10px;margin-top:10px;border-radius:12px}
 
-.card{
-  background:#1f2937;
-  padding:10px;
-  margin-top:10px;
-  border-radius:10px;
-}
-
-input,button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-}
-
+input,button{width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px}
 button{background:#22c55e;color:black;font-weight:bold}
 
 @media(min-width:900px){
-  .container{grid-template-columns:1fr 2fr 1fr}
+.grid{grid-template-columns:1fr 2fr 1fr}
 }
 </style>
 
@@ -83,13 +52,11 @@ const db = getFirestore(app);
 
 let currentUser=null;
 
-// LOAD USERS
+// USERS
 function loadUsers(){
   onSnapshot(collection(db,"messages"),snapshot=>{
     let users=new Set();
-    snapshot.forEach(doc=>{
-      users.add(doc.data().name);
-    });
+    snapshot.forEach(doc=>users.add(doc.data().name));
 
     let box=document.getElementById('users');
     box.innerHTML='';
@@ -103,7 +70,7 @@ function loadUsers(){
   });
 }
 
-// LOAD CHAT
+// CHAT
 function loadChat(){
   const q=query(collection(db,"messages"),orderBy("time"));
 
@@ -124,7 +91,7 @@ function loadChat(){
   });
 }
 
-// SEND REPLY
+// SEND CHAT
 window.sendReply=async function(){
   let input=document.getElementById('reply');
   if(!input.value || !currentUser) return;
@@ -138,13 +105,13 @@ window.sendReply=async function(){
   input.value='';
 }
 
-// LOAD BOOKINGS
+// BOOKINGS WITH REPLY
 function loadAppointments(){
   onSnapshot(collection(db,"appointments"),snapshot=>{
     let box=document.getElementById('appointments');
     box.innerHTML='';
 
-    snapshot.forEach(doc=>{
+    snapshot.forEach((doc,i)=>{
       let b=doc.data();
 
       let div=document.createElement('div');
@@ -154,6 +121,8 @@ function loadAppointments(){
         <strong>${b.name}</strong><br>
         📅 ${b.date} at ${b.time}<br>
         📧 ${b.email}
+        <input id="reply_${i}" placeholder="Reply to booking">
+        <button onclick="replyBooking('${b.name}', ${i})">Send Reply</button>
       `;
 
       box.appendChild(div);
@@ -161,7 +130,22 @@ function loadAppointments(){
   });
 }
 
-// LOAD COMMENTS
+// REPLY TO BOOKING
+window.replyBooking=async function(name,i){
+  let input=document.getElementById('reply_'+i);
+  if(!input.value) return;
+
+  await addDoc(collection(db,"messages"),{
+    name:"trainer",
+    text:`(Booking Reply to ${name}): `+input.value,
+    time:Date.now()
+  });
+
+  alert("Reply sent to "+name);
+  input.value='';
+}
+
+// COMMENTS
 function loadComments(){
   onSnapshot(collection(db,"comments"),snapshot=>{
     let box=document.getElementById('comments');
@@ -169,27 +153,18 @@ function loadComments(){
 
     snapshot.forEach(doc=>{
       let c=doc.data();
-
       let div=document.createElement('div');
       div.className='card';
-
-      div.innerHTML=`
-        <strong>${c.name}</strong><br>
-        ${'⭐'.repeat(c.stars)}<br>
-        ${c.text}
-      `;
-
+      div.innerHTML=`<strong>${c.name}</strong><br>${'⭐'.repeat(c.stars)}<br>${c.text}`;
       box.appendChild(div);
     });
   });
 }
 
-// INIT
 loadUsers();
 loadAppointments();
 loadComments();
 </script>
-
 </head>
 
 <body>
@@ -199,33 +174,31 @@ loadComments();
 </header>
 
 <div class="container">
+  <div class="grid">
 
-<!-- USERS -->
-<div class="section">
-<h2>👥 Clients</h2>
-<div id="users"></div>
-</div>
+    <div class="section">
+      <h2>👥 Clients</h2>
+      <div id="users" class="users"></div>
+    </div>
 
-<!-- CHAT -->
-<div class="section">
-<h2>💬 Chat</h2>
-<div id="chatBox" class="chat"></div>
-<input id="reply" placeholder="Reply...">
-<button onclick="sendReply()">Send</button>
-</div>
+    <div class="section">
+      <h2>💬 Chat</h2>
+      <div id="chatBox" class="chat"></div>
+      <input id="reply" placeholder="Reply...">
+      <button onclick="sendReply()">Send</button>
+    </div>
 
-<!-- BOOKINGS -->
-<div class="section">
-<h2>📅 Appointments</h2>
-<div id="appointments"></div>
-</div>
+    <div class="section">
+      <h2>📅 Appointments</h2>
+      <div id="appointments"></div>
+    </div>
 
-<!-- REVIEWS -->
-<div class="section">
-<h2>⭐ Reviews</h2>
-<div id="comments"></div>
-</div>
+    <div class="section">
+      <h2>⭐ Reviews</h2>
+      <div id="comments"></div>
+    </div>
 
+  </div>
 </div>
 
 </body>
