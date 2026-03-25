@@ -4,55 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Train With Me</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Poppins',sans-serif;background:#0f172a;color:#e5e7eb}
+body{font-family:Poppins;background:#0f172a;color:#e5e7eb}
 
 /* LOGIN */
 .center{display:flex;justify-content:center;align-items:center;height:100vh}
-.card{background:#111827;padding:30px;border-radius:20px;width:90%;max-width:400px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-.card h2{margin-bottom:10px}
-
+.card{background:#111827;padding:30px;border-radius:20px;width:90%;max-width:400px;text-align:center}
 input,textarea,button{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none}
 input,textarea{background:#1f2937;color:white}
-button{background:#22c55e;color:black;font-weight:600;cursor:pointer}
-button:hover{background:#16a34a}
+button{background:#22c55e;color:black;font-weight:600}
 
 /* HEADER */
-header{padding:20px;text-align:center;border-bottom:1px solid #1f2937}
-header h1{font-size:2rem}
-header p{color:#9ca3af}
+header{text-align:center;padding:20px;border-bottom:1px solid #1f2937}
 
 /* LAYOUT */
 .container{max-width:1200px;margin:auto;padding:20px}
 .grid{display:grid;grid-template-columns:1fr;gap:20px}
 
-.section{background:#111827;padding:20px;border-radius:20px;box-shadow:0 5px 20px rgba(0,0,0,0.3)}
-.section h2{margin-bottom:10px}
+.section{background:#111827;padding:20px;border-radius:20px}
 
 /* GALLERY */
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
-.gallery img{width:100%;height:130px;object-fit:cover;border-radius:12px}
+.gallery img{width:100%;height:130px;object-fit:cover;border-radius:10px}
 
 /* CHAT */
-.chat{max-height:300px;overflow-y:auto;background:#0b1220;padding:10px;border-radius:12px}
-.msg{padding:10px;margin:6px;border-radius:12px;font-size:0.9rem}
+.chat{max-height:300px;overflow:auto;background:#0b1220;padding:10px;border-radius:10px}
+.msg{padding:10px;margin:6px;border-radius:10px}
 .me{background:#22c55e;color:black;text-align:right}
 .them{background:#1f2937}
 
 /* COMMENTS */
-.comment{background:#1f2937;padding:10px;margin-top:10px;border-radius:12px}
-.comment strong{color:#22c55e}
+.comment{background:#1f2937;padding:10px;margin-top:10px;border-radius:10px}
 
 /* RESPONSIVE */
 @media(min-width:768px){
-  .grid{grid-template-columns:1fr 1fr}
+.grid{grid-template-columns:1fr 1fr}
 }
-
 @media(min-width:1100px){
-  .grid{grid-template-columns:1fr 1fr 1fr}
+.grid{grid-template-columns:1fr 1fr 1fr}
 }
 </style>
 
@@ -72,32 +65,36 @@ const db = getFirestore(app);
 let user=null;
 let rating=0;
 
+// LOGIN
 window.start=function(){
 user=document.getElementById('name').value;
 if(!user) return alert("Enter name");
 
 document.getElementById('login').style.display='none';
 document.getElementById('app').style.display='block';
+
 document.getElementById('bookName').value=user;
 
 listenChat();
 listenComments();
 }
 
+// SEND MESSAGE (PRIVATE)
 window.send=async function(){
 let text=document.getElementById('msg').value;
 if(!text) return;
 
 await addDoc(collection(db,"messages"),{
-  name:user,
-  to:"trainer",
-  text:text,
-  time:Date.now()
+name:user,
+to:"trainer",
+text:text,
+time:Date.now()
 });
 
 document.getElementById('msg').value='';
 }
 
+// PRIVATE CHAT DISPLAY
 function listenChat(){
 const q=query(collection(db,"messages"),orderBy("time"));
 
@@ -107,14 +104,22 @@ box.innerHTML='';
 
 snapshot.forEach(doc=>{
 let m=doc.data();
+
+// 🔐 PRIVATE FILTER
+if(
+(m.name===user && m.to==="trainer") ||
+(m.name==="trainer" && m.to===user)
+){
 let div=document.createElement('div');
 div.className='msg '+(m.name===user?'me':'them');
 div.innerText=m.name+": "+m.text;
 box.appendChild(div);
+}
 });
 });
 }
 
+// BOOKINGS
 window.book=async function(e){
 e.preventDefault();
 
@@ -128,6 +133,7 @@ time:document.getElementById('time').value
 alert("Booking sent!");
 }
 
+// COMMENTS
 window.rate=function(n){rating=n}
 
 window.addComment=async function(){
@@ -169,7 +175,6 @@ box.appendChild(div);
 <div id="login" class="center">
   <div class="card">
     <h2>💪 Train With Me</h2>
-    <p>Start your fitness journey</p>
     <input id="name" placeholder="Enter your name">
     <button onclick="start()">Enter</button>
   </div>
@@ -179,55 +184,59 @@ box.appendChild(div);
 <div id="app" style="display:none">
 
 <header>
-  <h1>Train With Me</h1>
-  <p>Book • Train • Transform</p>
+<h1>Train With Me</h1>
+<p>Book • Train • Transform</p>
 </header>
 
 <div class="container">
-  <div class="grid">
+<div class="grid">
 
-    <div class="section">
-      <h2>📅 Book Session</h2>
-      <form onsubmit="book(event)">
-        <input id="bookName" required>
-        <input id="email" placeholder="Email" required>
-        <input type="date" id="date" required>
-        <input type="time" id="time" required>
-        <button>Book Now</button>
-      </form>
-    </div>
+<div class="section">
+<h2>📅 Book Session</h2>
+<form onsubmit="book(event)">
+<input id="bookName" required>
+<input id="email" placeholder="Email" required>
+<input type="date" id="date" required>
+<input type="time" id="time" required>
+<button>Book Now</button>
+</form>
+</div>
 
-    <div class="section">
-      <h2>🏋️ Gallery</h2>
-      <div class="gallery">
-        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e">
-        <img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1">
-        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438">
-      </div>
-    </div>
+<div class="section">
+<h2>🏋️ Gallery</h2>
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e">
+<img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1">
+<img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438">
+</div>
+</div>
 
-    <div class="section">
-      <h2>💬 Chat</h2>
-      <div id="chat" class="chat"></div>
-      <input id="msg" placeholder="Type message...">
-      <button onclick="send()">Send</button>
-    </div>
+<div class="section">
+<h2>💬 Chat</h2>
+<div id="chat" class="chat"></div>
+<input id="msg" placeholder="Type message...">
+<button onclick="send()">Send</button>
+</div>
 
-    <div class="section">
-      <h2>⭐ Reviews</h2>
-      <div>
-        <span onclick="rate(1)">⭐</span>
-        <span onclick="rate(2)">⭐</span>
-        <span onclick="rate(3)">⭐</span>
-        <span onclick="rate(4)">⭐</span>
-        <span onclick="rate(5)">⭐</span>
-      </div>
-      <textarea id="commentInput" placeholder="Write review..."></textarea>
-      <button onclick="addComment()">Post</button>
-      <div id="comments"></div>
-    </div>
+<div class="section">
+<h2>⭐ Reviews</h2>
 
-  </div>
+<div>
+<span onclick="rate(1)">⭐</span>
+<span onclick="rate(2)">⭐</span>
+<span onclick="rate(3)">⭐</span>
+<span onclick="rate(4)">⭐</span>
+<span onclick="rate(5)">⭐</span>
+</div>
+
+<textarea id="commentInput" placeholder="Write review..."></textarea>
+<button onclick="addComment()">Post</button>
+
+<div id="comments"></div>
+
+</div>
+
+</div>
 </div>
 
 </div>
