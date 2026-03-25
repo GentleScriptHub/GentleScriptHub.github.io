@@ -89,9 +89,10 @@ let text=document.getElementById('msg').value;
 if(!text) return;
 
 await addDoc(collection(db,"messages"),{
-name:user,
-text:text,
-time:Date.now()
+  name:user,
+  to:"trainer",
+  text:text,
+  time:Date.now()
 });
 
 document.getElementById('msg').value='';
