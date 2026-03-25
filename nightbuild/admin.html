@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trainer Dashboard</title>
+
+<style>
+body{font-family:sans-serif;background:#0f172a;color:white}
+.container{display:flex}
+.users{width:30%;padding:10px}
+.chat{width:70%;padding:10px}
+.user{padding:10px;background:#1f2937;margin:5px;border-radius:10px;cursor:pointer}
+.msg{margin:5px;padding:8px;border-radius:10px}
+.me{background:#22c55e;color:black;text-align:right}
+.them{background:#1f2937}
+input,button{width:100%;padding:10px;margin-top:10px;border:none;border-radius:10px}
+button{background:#22c55e;color:black}
+</style>
+</head>
+
+<body>
+
+<h2 style="text-align:center;">Trainer Dashboard</h2>
+
+<div class="container">
+
+<div class="users" id="users"></div>
+
+<div class="chat">
+<div id="chatBox"></div>
+<input id="reply">
+<button onclick="send()">Send</button>
+</div>
+
+</div>
+
+<script>
+let current;
+
+function loadUsers(){
+let u=document.getElementById('users');
+u.innerHTML='';
+for(let k in localStorage){
+if(k.startsWith('chat_')){
+let name=k.replace('chat_','');
+let d=document.createElement('div');
+d.className='user';
+d.innerText=name;
+d.onclick=()=>{current=name;loadChat();};
+u.appendChild(d);
+}}
+}
+
+function loadChat(){
+let box=document.getElementById('chatBox');
+box.innerHTML='';
+let data=JSON.parse(localStorage.getItem('chat_'+current)||'[]');
+data.forEach(m=>{
+let d=document.createElement('div');
+d.className='msg '+(m.from==='trainer'?'me':'them');
+d.innerText=m.text;
+box.appendChild(d);
+});
+}
+
+function send(){
+let input=document.getElementById('reply');
+if(!input.value||!current) return;
+let data=JSON.parse(localStorage.getItem('chat_'+current)||'[]');
+data.push({from:'trainer',text:input.value});
+localStorage.setItem('chat_'+current,JSON.stringify(data));
+input.value='';
+loadChat();
+}
+
+loadUsers();
+</script>
+
+</body>
+</html>
