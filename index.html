@@ -1,534 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465789210372971"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GentleHub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background-color: #0e0e0e;
-      color: #fff;
-      overflow-x: hidden;
-    }
-    /* Welcome Screen */
-    #welcomeScreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100%;
-      background: #0e0e0e;
-      color: #ff4d4d;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 1s ease, visibility 1s ease;
-    }
-    #welcomeScreen.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-    #welcomeScreen h1 {
-      font-size: 48px;
-      margin: 0;
-    }
-    #welcomeScreen p {
-      font-size: 20px;
-      color: #ccc;
-    }
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-      padding: 30px 40px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      width: 100%;
-    }
-    .header img {
-      height: 100px;
-      margin-bottom: 10px;
-    }
-    .header h1 {
-      color: #ff4d4d;
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    .header p {
-      font-size: 18px;
-      color: #ccc;
-    }
-    
-    /* Sidebar */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 260px;
-      height: 100%;
-      background: #1a1a1a;
-      padding: 30px;
-      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 10;
-      transition: left 0.5s ease;
-    }
-    .sidebar.open {
-      left: 0;
-    }
-    .sidebar h3 {
-      color: #ff4d4d;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-    .sidebar p {
-      font-size: 16px;
-      color: #bbb;
-      margin: 5px 0;
-    }
-    .discord-btn {
-      background: #ff4d4d;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 16px;
-      margin-top: 20px;
-      transition: background 0.3s ease;
-    }
-    .discord-btn:hover {
-      background: #ff1a1a;
-    }
-    .close-sidebar {
-      position: absolute;
-      top: 20px;
-      right: -30px;
-      background: #ff4d4d;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-    }
-    .main-content {
-      margin-left: 0;
-      padding: 40px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      background: #1a1a1a;
-      padding: 15px;
-      margin-bottom: 30px;
-      border-radius: 6px;
-    }
-    .tabs button {
-      background: #2a2a2a;
-      color: #fff;
-      padding: 12px 24px;
-      border: 2px solid #ff4d4d;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: 0.3s;
-    }
-    .tabs button:hover {
-      background: #ff4d4d;
-      border-color: #fff;
-    }
-    .script-section {
-      max-width: 1200px;
-      width: 100%;
-      margin-top: 40px;
-      padding: 20px;
-      background: #1c1c1c;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-    }
-    .script-category {
-      margin-bottom: 30px;
-    }
-    .script-category h2 {
-      font-size: 26px;
-      color: #ff4d4d;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
-    }
-    .script-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .script-item {
-      background: #222;
-      padding: 20px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      transition: 0.3s ease;
-    }
-    .script-item:hover {
-      border-color: #ff4d4d;
-      box-shadow: 0 5px 15px rgba(255, 77, 77, 0.7);
-    }
-    .script-title {
-      font-size: 20px;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-    .copy-btn {
-      background: #ff4d4d;
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 6px;
-      font-size: 16px;
-      transition: background 0.3s;
-    }
-    .copy-btn:hover {
-      background: #ff1a1a;
-    }
-    .premium-section {
-      max-width: 1200px;
-      width: 100%;
-      padding: 40px 20px;
-      background: linear-gradient(145deg, #2a0000, #1a0000);
-      border-radius: 12px;
-      text-align: center;
-      margin-top: 40px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
-    }
-    .premium-section h2 {
-      font-size: 36px;
-      color: #ff4d4d;
-      margin-bottom: 20px;
-    }
-    .premium-section p {
-      font-size: 18px;
-      color: #ccc;
-      margin: 20px 0;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .premium-section button {
-      font-size: 18px;
-      background: #ff4d4d;
-      border: none;
-      color: white;
-      padding: 12px 30px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .premium-section button:hover {
-      background: #ff1a1a;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Train With Me</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
 
-    }
-    button:hover {
-      background-color: #ff1a1a;
-    }
-    .music-list {
-      display: none;
-      margin-top: 20px;
-      list-style: none;
-      padding: 0;
-    }
-    .music-item {
-      background-color: #333;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .music-item:hover {
-      background-color: #444;
-    }
-    #musicPlayer {
-      display: none;
-      height: 0;
-      overflow: hidden;
-    }
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: linear-gradient(to right, #1e1e1e, #2c2c2c);
+  color: white;
+}
 
-     /* Mobile adjustments */
-     @media (max-width: 768px) {
-      .tabs button {
-        font-size: 14px;
-        padding: 10px 18px;
-      }
-      .script-title {
-        font-size: 16px;
-      }
-      .premium-section h2 {
-        font-size: 24px;
-      }
-      .premium-section p {
-        font-size: 14px;
-      }
-      .header h1 {
-        font-size: 28px;
-      }
-      .header p {
-        font-size: 14px;
-      }
-      /* Sidebar */
-      .sidebar {
-        left: -100%;
-        padding: 20px;
-      }
-      .sidebar.open {
-        left: 0;
-      }
-      .main-content {
-        padding: 20px;
-      }
-      .script-list {
-        grid-template-columns: 1fr;
-      }
-    }
+header {
+  text-align: center;
+  padding: 30px 15px;
+}
+
+header h1 {
+  font-size: 2rem;
+}
+
+header p {
+  font-size: 1rem;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+input, button {
+  padding: 12px;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+button {
+  background: black;
+  color: white;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #444;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+}
+
+/* TABLET */
+@media (min-width: 600px) {
+  header h1 { font-size: 2.5rem; }
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* DESKTOP */
+@media (min-width: 900px) {
+  header h1 { font-size: 3rem; }
+  header p { font-size: 1.2rem; }
+  .grid { grid-template-columns: 1fr 1fr; }
+}
 
 </style>
 </head>
 <body>
 
-  <!-- Welcome Screen -->
-  <div id="welcomeScreen">
-    <h1>Welcome to GentleHub</h1>
-    <p>Loading Page...</p>
-  </div>
+<header>
+  <h1>💪 Train With Me</h1>
+  <p>Get stronger. Get confident. Start today.</p>
+</header>
 
-  <iframe
-  width="0"
-  height="0"
-  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ"
-  frameborder="0"
-  allow="autoplay"
-></iframe>
+<div class="container">
+  <div class="grid">
 
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="discordSidebar">
-    <button class="close-sidebar" onclick="toggleSidebar()">×</button>
-    <h3>GentleHub</h3>
-    <p><strong>Active Members:</strong> <span id="activeMembers">Loading...</span></p>
-    <p><strong>Members:</strong> 2010</p>
-    <a href="https://discord.com/invite/RKhKPBdVJw" class="discord-btn" target="_blank">Join Discord</a>
-  </div>
-  
-  
-  <!-- Main Content -->
-  <div class="main-content" id="mainContent">
-    <div class="header">
-      <img src="https://i.imgur.com/hanj20Z.png" alt="GentleHub Logo">
-      <h1>GentleHub Script Hub</h1>
-      <p>Your destination for Roblox scripts — Fast, Free, and Powerful</p>
+    <div class="card">
+      <h2>About Me</h2>
+      <p>I help people build strength, lose fat, and feel confident. Whether you're a beginner or experienced, I got you.</p>
     </div>
 
-    <div class="tabs">
-      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-      <button onclick="scrollToSection('scripts')">Scripts</button>
-      <button onclick="showCategory('premium')">Premium</button>
-      <button onclick="showCategory('key')">Key Links</button>
-      <button id="playMusicBtn" onclick="toggleMusicList()">Play Music</button>
+    <div class="card">
+      <h2>Book a Session</h2>
+      <form action="https://formsubmit.co/javonjoseph2004@gmail.com" method="POST" target="_blank">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+
+        <input type="hidden" name="_subject" value="New Booking Request!">
+        <input type="hidden" name="_captcha" value="false">
+        <!-- Removed redirect to avoid 404 issues -->
+
+        <button type="submit">Book Now</button>
+      </form>
     </div>
 
-    <div class="script-section" id="scripts">
-      
-      
-      <div style="margin-bottom: 30px; text-align: center;">
-        <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Search for a script..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 6px; border: 1px solid #333; background-color: #1a1a1a; color: white;">
-      </div> 
-      
-      <ul id="musicList" class="music-list">
-        <li class="music-item">
-          <span class="music-label">Song 1 - Rick Astley</span>
-          <button onclick="playOrStopSong(this, 'dQw4w9WgXcQ')">Play</button>
-        </li>
-        <li class="music-item">
-          <span class="music-label">Song 2 - Some Artist</span>
-          <button onclick="playOrStopSong(this, 'JwYX52BP2Sk')">Play</button>
-        </li>
-        <li class="music-item">
-          <span class="music-label">Song 3 - Another Artist</span>
-          <button onclick="playOrStopSong(this, 'kXYiU_JCYtU')">Play</button>
-        </li>
-      </ul>
-      
-      <div id="musicPlayer">
-        <iframe id="ytplayer" src="" allow="autoplay" style="width:0;height:0;border:0;"></iframe>
-      </div>
-  
-      <div class="script-category">
-        <h2>Featured Scripts</h2>
-        <div class="script-list">
-          <div class="script-item"><div class="script-title">Arise Crossover</div><button class="copy-btn" onclick="copyScript('Arise')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">PETS GO</div><button class="copy-btn" onclick="copyScript('PetsGo')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">Grow a Garden</div><button class="copy-btn" onclick="copyScript('Grow')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">Robot Evolution</div><button class="copy-btn" onclick="copyScript('Robot')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">+1 Slayer Blade</div><button class="copy-btn" onclick="copyScript('Slayer')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">Paint 'em'</div><button class="copy-btn" onclick="copyScript('Paint')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">Bioblades RPG</div><button class="copy-btn" onclick="copyScript('Bioblades')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">Skateboard Obby</div><button class="copy-btn" onclick="copyScript('Skateboard')">Copy Script</button></div>
-          <div class="script-item"><div class="script-title">Flying Wings Race Sim</div><button class="copy-btn" onclick="copyScript('Flying')">Copy Script</button></div>
-        </div>
-        <div class="script-category" id="key" style="display: none;">
-          <h2>🔑 Key Links</h2>
+  </div>
+</div>
 
-          <div class="script-list">
-            <div class="script-item">
-              <div class="script-title">Main Key</div>
-              <a href="https://link-target.net/1305307/gentle-key" target="_blank" class="copy-btn">Visit</a>
-            </div>
-            <div class="script-item">
-              <div class="script-title">Backup Key</div>
-              <a href="https://loot-link.com/s?8Zm04TgW" target="_blank" class="copy-btn">Visit</a>
-            </div>
-            <div class="script-item">
-              <div class="script-title">Instructions</div>
-              <a href="https://www.youtube.com/shorts/hcb-EEsQ5-A" target="_blank" class="copy-btn">View</a>
-            </div>
-          </div>
-        </div>
-        <div class="premium-section" id="premium">
-          <h2>Upgrade to Premium</h2>
-          <p>Unlock exclusive features and premium scripts only available to members. Get your edge today!</p>
-          <button onclick="window.open('https://payhip.com/Alezepremium', '_blank')">Join Premium</button>
-        </div>
-      </div>
-      
-  <script>
+<footer>
+  © 2026 Train With Me | Built for your fitness journey
+</footer>
 
-function toggleSidebar() {
-   document.querySelector('.sidebar').classList.toggle('open');
-}
-
-      function toggleSidebar() {
-    document.getElementById("discordSidebar").classList.toggle("open");
-  }
-    // Toggle sidebar visibility and slide content
-    function toggleSidebar() {
-      const sidebar = document.getElementById("discordSidebar");
-      const mainContent = document.getElementById("mainContent");
-      sidebar.classList.toggle("open");
-      mainContent.style.marginLeft = sidebar.classList.contains("open") ? "260px" : "0";
-    }
-
-  function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
-
-    // Simulate active members count (replace with actual data)
-    setTimeout(() => {
-      document.getElementById('activeMembers').textContent = '300';
-    }, 2000);
-
-
-    // Welcome Screen Delay
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("welcomeScreen").classList.add("hidden");
-      }, 2000);
-    });
-
-    // Sidebar Toggle
-    function toggleSidebar() {
-      document.getElementById("discordSidebar").classList.toggle("open");
-    }
-
-    // Scroll to Section
-    function scrollToSection(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-      if (id !== 'key') document.getElementById("key").style.display = 'none';
-    }
-
-    // Show Category (Key Links)
-function showCategory(id) {
-    document.getElementById("key").style.display = id === "key" ? "block" : "none";
-    scrollToSection(id);
-  }
-
-    // Copy Script Function
-    function copyScript() {
-    const scriptToCopy = `loadstring(game:HttpGet("https://raw.githubusercontent.com/GentleScriptHub/GentleHub/refs/heads/main/Games"))()`;
-    navigator.clipboard.writeText(scriptToCopy).then(() => {
-      alert("Script copied to clipboard!");
-    }).catch(err => {
-      alert("Failed to copy script.");
-      console.error(err);
-    });
-  }
-
-  let musicListVisible = false;
-  let currentSongId = null;
-  let currentButton = null;
-
-  function toggleMusicList() {
-    musicListVisible = !musicListVisible;
-    document.getElementById("musicList").style.display = musicListVisible ? "block" : "none";
-  }
-
-  function playOrStopSong(button, videoId) {
-    const player = document.getElementById("ytplayer");
-
-    // If same song is clicked again, stop playback
-    if (currentSongId === videoId) {
-      player.src = "";
-      currentSongId = null;
-      button.textContent = "Play";
-      document.getElementById("musicPlayer").style.display = "none";
-      currentButton = null;
-    } else {
-      // Stop previously playing song
-      if (currentButton) {
-        currentButton.textContent = "Play";
-      }
-
-      const audioOnlyUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`;
-      player.src = audioOnlyUrl;
-      currentSongId = videoId;
-      document.getElementById("musicPlayer").style.display = "block";
-      button.textContent = "Stop";
-      currentButton = button;
-    }
-  }
-
-  // Filter Script Titles
-  function filterScripts() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const scripts = document.querySelectorAll(".script-item");
-
-    scripts.forEach(script => {
-      const title = script.querySelector(".script-title").textContent.toLowerCase();
-      script.style.display = title.includes(input) ? "block" : "none";
-    });
-  }
-    window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('welcomeScreen').classList.add('hidden');
-    }, 2000); // Adjust delay as needed
-  });
-  </script>
 </body>
 </html>
